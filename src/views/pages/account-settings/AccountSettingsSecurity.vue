@@ -17,7 +17,7 @@
                 v-model="currentPassword"
                 :type="isCurrentPasswordVisible ? 'text' : 'password'"
                 :append-icon="isCurrentPasswordVisible ? icons.mdiEyeOffOutline:icons.mdiEyeOutline"
-                label="Current Password"
+                label="Contraseña actual"
                 outlined
                 dense
                 @click:append="isCurrentPasswordVisible = !isCurrentPasswordVisible"
@@ -28,7 +28,7 @@
                 v-model="newPassword"
                 :type="isNewPasswordVisible ? 'text' : 'password'"
                 :append-icon="isNewPasswordVisible ? icons.mdiEyeOffOutline:icons.mdiEyeOutline"
-                label="New Password"
+                label="Nueva Contraseña"
                 outlined
                 dense
                 hint="Make sure it's at least 8 characters."
@@ -41,7 +41,7 @@
                 v-model="cPassword"
                 :type="isCPasswordVisible ? 'text' : 'password'"
                 :append-icon="isCPasswordVisible ? icons.mdiEyeOffOutline:icons.mdiEyeOutline"
-                label="Confirm New Password"
+                label="Confirmar Nueva Contraseña"
                 outlined
                 dense
                 class="mt-3"
@@ -74,7 +74,7 @@
           <v-icon class="text--primary me-3">
             {{ icons.mdiKeyOutline }}
           </v-icon>
-          <span class="text-break">Two-factor authentication</span>
+          <span class="text-break">Autentificacion en dos pasos</span>
         </v-card-title>
 
         <v-card-text class="two-factor-auth text-center mx-auto">
@@ -91,12 +91,10 @@
             </v-icon>
           </v-avatar>
           <p class="text-base text--primary font-weight-semibold">
-            Two factor authentication is not enabled yet.
+            Autentificacion en dos pasos aun no esta habilitado.
           </p>
           <p class="text-sm text--primary">
-            Two-factor authentication adds an additional layer of
-            security to your account by requiring more than just a
-            password to log in. Learn more.
+            Autentificacion en dos pasos agrega una capa adiconal de seguridad a tus inicios de sesion. Leer mas.
           </p>
         </v-card-text>
 
@@ -106,14 +104,14 @@
             color="primary"
             class="me-3 mt-3"
           >
-            Save changes
+            Guardar Cambios
           </v-btn>
           <v-btn
             color="secondary"
             outlined
             class="mt-3"
           >
-            Cancel
+            Cancelar
           </v-btn>
         </v-card-text>
       </div>

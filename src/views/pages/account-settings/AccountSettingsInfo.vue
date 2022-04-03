@@ -11,7 +11,7 @@
               v-model="optionsLocal.bio"
               outlined
               rows="3"
-              label="Bio"
+              label="Biografia"
             ></v-textarea>
           </v-col>
 
@@ -23,7 +23,7 @@
               v-model="optionsLocal.birthday"
               outlined
               dense
-              label="Birthday"
+              label="Cumpleaños"
             ></v-text-field>
           </v-col>
 
@@ -35,7 +35,7 @@
               v-model="optionsLocal.phone"
               outlined
               dense
-              label="Phone"
+              label="Contacto"
             ></v-text-field>
           </v-col>
 
@@ -47,7 +47,7 @@
               v-model="optionsLocal.website"
               outlined
               dense
-              label="Website"
+              label="Sitio Web"
             ></v-text-field>
           </v-col>
 
@@ -59,7 +59,7 @@
               v-model="optionsLocal.country"
               outlined
               dense
-              label="Country"
+              label="Pais"
               :items="['USA','UK','AUSTRALIA','BRAZIL']"
             ></v-select>
           </v-col>
@@ -75,7 +75,7 @@
               multiple
               chips
               small-chips
-              label="Languages"
+              label="Lenguajes"
               :items="['English','Spanish','French','German']"
             ></v-select>
           </v-col>
@@ -85,7 +85,7 @@
             md="6"
           >
             <p class="text--primary mt-n3 mb-2">
-              Gender
+              Genero
             </p>
             <v-radio-group
               v-model="optionsLocal.gender"
@@ -105,7 +105,7 @@
               </v-radio>
               <v-radio
                 value="other"
-                label="Other"
+                label="Otros"
               >
               </v-radio>
             </v-radio-group>
@@ -118,7 +118,7 @@
           color="primary"
           class="me-3 mt-3"
         >
-          Save changes
+          Guardar Cambios
         </v-btn>
         <v-btn
           outlined
@@ -127,7 +127,7 @@
           type="reset"
           @click.prevent="resetForm"
         >
-          Cancel
+          Cancelar
         </v-btn>
       </v-card-text>
     </v-form>
