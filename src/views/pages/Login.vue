@@ -22,6 +22,7 @@
         Materio
       </h2>
     </router-link>
+
   </v-card-title>-->
         <!-- title -->
         <v-card-text>
