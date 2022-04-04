@@ -1,17 +1,27 @@
 <template>
 	<div>
 		<p class="text-2xl mb-6">Materias</p>
+		<v-card>
+			<v-img src="@/assets/images/pages/card-basic-influencer.png"
+						 height="250" />
+			<v-card-title>
+				MATEMATICA 6TO GRADO
+			</v-card-title>
+			<v-card-text>
+				<p>DOCENTE: JOHN DOE</p>
+				<p>HORARIO: LUN (6:45 AM - 8:25 AM), JUEV LUN (6:45 AM - 8:25 AM)</p>
+				<p>ALUMNOS INSCRITOS: </p>
+			</v-card-text>
+		</v-card>
 		<v-row>
 			<v-col cols="12">
 				<v-card>
 					<v-card-title>
-						<v-text-field
-							v-model="search"
-							append-icon="mdi-magnify"
-							label="Search"
-							single-line
-							hide-details
-						></v-text-field>
+						<v-text-field v-model="search"
+													append-icon="mdi-magnify"
+													label="Buscar alumno"
+													single-line
+													hide-details></v-text-field>
 					</v-card-title>
 					<v-data-table :headers="headers" :items="desserts" :items-per-page="10" :search="search" class="elevation-1">
 						<template>
@@ -35,97 +45,43 @@ export default {
 		return {
 			headers: [
 				{
-					text: 'Dessert (100g serving)',
+					text: 'Apellidos',
 					align: 'start',
 					value: 'name',
 				},
-				{ text: 'Calories', value: 'calories' },
-				{ text: 'Fat (g)', value: 'fat' },
-				{ text: 'Carbs (g)', value: 'carbs' },
-				{ text: 'Protein (g)', value: 'protein' },
-				{ text: 'Iron (%)', value: 'iron' },
-				{ text: 'Actions', value: 'actions', sortable: false },
+				{ text: 'Nombre', value: 'calories' },
+				{ text: 'Carnet', value: 'fat' },
+				{ text: 'Grupo', value: 'carbs' },
+				{ text: 'e-mail', value: 'protein' },
+				{ text: 'Promedio 1', value: 'iron' },
+				{ text: 'Promedio 2', value: 'iron' },
+				{ text: 'Promedio 3', value: 'iron' },
+				{text: 'Acciones', value: 'actions', sortable: false },
 			],
 			desserts: [
 				{
-					name: 'Frozen Yogurt',
-					calories: 159,
-					fat: 6.0,
-					carbs: 24,
-					protein: 4.0,
-					iron: '1%',
+					name: 'Aguilar Melgar',
+					calories: 'Julio Isrrael',
+					fat: '2019AG000',
+					carbs: 1,
+					protein: '2019AG000@sj.com',
+					iron: 8.5,
 				},
 				{
-					name: 'Ice cream sandwich',
-					calories: 237,
-					fat: 9.0,
-					carbs: 37,
-					protein: 4.3,
-					iron: '1%',
+					name: 'Carranza Rivas',
+					calories: 'Mario Ernesto',
+					fat: '2018CR001',
+					carbs: 1,
+					protein: '2018CR001@sj.com',
+					iron: 9.7,
 				},
 				{
-					name: 'Eclair',
-					calories: 262,
-					fat: 16.0,
-					carbs: 23,
-					protein: 6.0,
-					iron: '7%',
-				},
-				{
-					name: 'Cupcake',
-					calories: 305,
-					fat: 3.7,
-					carbs: 67,
-					protein: 4.3,
-					iron: '8%',
-				},
-				{
-					name: 'Gingerbread',
-					calories: 356,
-					fat: 16.0,
-					carbs: 49,
-					protein: 3.9,
-					iron: '16%',
-				},
-				{
-					name: 'Jelly bean',
-					calories: 375,
-					fat: 0.0,
-					carbs: 94,
-					protein: 0.0,
-					iron: '0%',
-				},
-				{
-					name: 'Lollipop',
-					calories: 392,
-					fat: 0.2,
-					carbs: 98,
-					protein: 0,
-					iron: '2%',
-				},
-				{
-					name: 'Honeycomb',
-					calories: 408,
-					fat: 3.2,
-					carbs: 87,
-					protein: 6.5,
-					iron: '45%',
-				},
-				{
-					name: 'Donut',
-					calories: 452,
-					fat: 25.0,
-					carbs: 51,
-					protein: 4.9,
-					iron: '22%',
-				},
-				{
-					name: 'KitKat',
-					calories: 518,
-					fat: 26.0,
-					carbs: 65,
-					protein: 7,
-					iron: '6%',
+					name: 'Palacios Ayala',
+					calories: 'Diego Ernesto',
+					fat: '2019PA002',
+					carbs: 1,
+					protein: '2019PA002@sj.com',
+					iron: 8.7,
 				},
 			],
 		}

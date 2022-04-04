@@ -3,7 +3,8 @@
     "",
     "\\src",
     "\\src\\views",
-    "\\src\\views\\pages"
+    "\\src\\views\\pages",
+    "\\src\\views\\pages\\account-settings"
   ],
   "SelectedNode": "\\src\\views\\pages\\Login.vue",
   "PreviewInSolutionExplorer": false
