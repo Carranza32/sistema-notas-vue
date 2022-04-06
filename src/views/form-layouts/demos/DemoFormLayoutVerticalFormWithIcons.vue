@@ -3,10 +3,10 @@
     <v-text-field
       v-model="firstname"
       :prepend-inner-icon="icons.mdiAccountOutline"
-      label="First Name"
+      label="Alumno"
       outlined
       dense
-      placeholder="First Name"
+      placeholder="Alumno"
     ></v-text-field>
 
     <v-text-field
@@ -22,38 +22,38 @@
     <v-text-field
       v-model="mobile"
       :prepend-inner-icon="icons.mdiCellphone"
-      label="Mobile"
+      label="Telefono"
       outlined
       dense
       type="number"
-      placeholder="Number"
+      placeholder="Telefono"
     ></v-text-field>
 
     <v-text-field
       v-model="password"
       :prepend-inner-icon="icons.mdiLockOutline"
-      label="Password"
+      label="Contraseña"
       outlined
       dense
       type="password"
-      placeholder="password"
+      placeholder="Contraseña"
     ></v-text-field>
 
     <v-checkbox
       v-model="checkbox"
-      label="Remember me"
+      label="Recuerdame"
       class="mt-0"
     ></v-checkbox>
 
     <v-btn color="primary">
-      Submit
+      Enviar
     </v-btn>
     <v-btn
       type="reset"
       outlined
       class="mx-2"
     >
-      Reset
+      Limpiar
     </v-btn>
   </v-form>
 </template>
