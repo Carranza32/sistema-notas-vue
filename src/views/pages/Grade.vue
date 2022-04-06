@@ -35,7 +35,7 @@
           outlined
           dense
           type="number"
-          placeholder="Telefono"
+          placeholder="telefono"
         ></v-text-field>
 
         <v-text-field

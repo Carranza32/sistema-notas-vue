@@ -69,7 +69,7 @@ export default {
           number: '7855-5598',
         },
         {
-          lastname: 'Carranza Rivas',
+          lastname: 'Carranza rivas',
           name: 'Mario Ernesto',
           carnet: '2018CR001',
           group: 1,
