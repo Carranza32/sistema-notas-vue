@@ -43,38 +43,38 @@
         :icon="icons.mdiHomeOutline"
       ></nav-menu-link>
 
-      <nav-menu-group
-        title="Configuración"
-        :icon="icons.mdiCogOutline"
-      >
         <nav-menu-link
           title="Materias"
           :to="{ name: 'pages-subject' }"
+          :icon="icons.mdiBookOpenVariant"
         ></nav-menu-link>
 
         <nav-menu-link
           title="Docentes"
           :to="{ name: 'pages-teacher' }"
+          :icon="icons.mdiAccountCircle"
         ></nav-menu-link>
 
         <nav-menu-link
           title="Alumnos"
           :to="{ name: 'pages-student' }"
+          :icon="icons.mdiAccountGroup"
         ></nav-menu-link>
-      </nav-menu-group>
 
         <nav-menu-link
           title="Registro de notas"
           :to="{ name: 'pages-grades' }"
+          :icon="icons.mdiBookPlusMultiple"
         ></nav-menu-link>
 
         <nav-menu-link
           title="Reportes"
           :to="{ name: 'pages-report' }"
+          :icon="icons.mdiFileChartOutline"
         ></nav-menu-link>
 
       <nav-menu-link
-        title="Account Settings"
+        title="Configuración"
         :to="{ name: 'pages-account-settings'}"
         :icon="icons.mdiAccountCogOutline"
       ></nav-menu-link>
@@ -141,6 +141,11 @@ import {
   mdiFormSelect,
   mdiAccountCogOutline,
   mdiCogOutline,
+  mdiAccountCircle,
+  mdiBookOpenVariant,
+  mdiAccountGroup,
+  mdiBookPlusMultiple,
+  mdiFileChartOutline,
 } from '@mdi/js'
 import NavMenuSectionTitle from './components/NavMenuSectionTitle.vue'
 import NavMenuGroup from './components/NavMenuGroup.vue'
@@ -170,6 +175,11 @@ export default {
         mdiFormSelect,
         mdiAccountCogOutline,
         mdiCogOutline,
+        mdiAccountCircle,
+        mdiBookOpenVariant,
+        mdiAccountGroup,
+        mdiBookPlusMultiple,
+        mdiFileChartOutline,
       },
     }
   },

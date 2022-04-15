@@ -62,27 +62,27 @@ const routes = [
   {
     path: '/pages/subject',
     name: 'pages-subject',
-    component: () => import('@/views/pages/Subject.vue'),
+    component: () => import('@/views/pages/Subjects/Subject.vue'),
   },
   {
     path: '/pages/student',
     name: 'pages-student',
-    component: () => import('@/views/pages/Student.vue'),
+    component: () => import('@/views/pages/Students/Student.vue'),
   },
   {
     path: '/pages/teacher',
     name: 'pages-teacher',
-    component: () => import('@/views/pages/Teacher.vue'),
+    component: () => import('@/views/pages/Teacher/Teacher.vue'),
   },
   {
     path: '/pages/report',
     name: 'pages-report',
-    component: () => import('@/views/pages/Report.vue'),
+    component: () => import('@/views/pages/Reports/Report.vue'),
   },
   {
     path: '/pages/grades',
     name: 'pages-grades',
-    component: () => import('@/views/pages/Grade.vue'),
+    component: () => import('@/views/pages/Grade/Grade.vue'),
   },
   {
     path: '/error-404',
