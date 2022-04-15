@@ -85,6 +85,16 @@ const routes = [
     component: () => import('@/views/pages/Grade/Grade.vue'),
   },
   {
+    path: '/pages/addstudent',
+    name: 'pages-addstudent',
+    component: () => import('@/views/pages/Students/AddStudent.vue'),
+  },
+  {
+    path: '/pages/test',
+    name: 'pages-test',
+    component: () => import('@/views/pages/Students/StudentTest.vue'),
+  },
+  {
     path: '/error-404',
     name: 'error-404',
     component: () => import('@/views/Error.vue'),

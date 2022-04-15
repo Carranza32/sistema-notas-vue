@@ -1,8 +1,6 @@
 <template>
   <div>
-    <p class="text-2xl mb-6">
-      Docentes
-    </p>
+    <p class="text-2xl mb-6">Docentes</p>
     <v-row>
       <v-col cols="12">
         <v-card>
@@ -13,28 +11,15 @@
               label="Buscar docente"
               single-line
               hide-details
+              class="d-flex pa-2"
             ></v-text-field>
-            <v-btn color="primary">
-                Agregar nuevo
-              </v-btn>
+            <add-teacher></add-teacher>
           </v-card-title>
-          <v-data-table
-            :headers="headers"
-            :items="names"
-            :items-per-page="10"
-            :search="search"
-            class="elevation-1"
-          >
+
+          <v-data-table :headers="headers" :items="names" :items-per-page="10" :search="search" class="elevation-1">
             <template>
-              <v-icon
-                small
-                class="mr-2"
-              >
-                mdi-pencil
-              </v-icon>
-              <v-icon small>
-                mdi-delete
-              </v-icon>
+              <v-icon small class="mr-2"> mdi-pencil </v-icon>
+              <v-icon small> mdi-delete </v-icon>
             </template>
           </v-data-table>
         </v-card>
@@ -44,7 +29,10 @@
 </template>
 
 <script>
+import AddTeacher from './AddTeacher.vue'
+
 export default {
+  components: { AddTeacher },
   setup() {},
 
   data() {
