@@ -1,204 +1,146 @@
 <template>
-  <v-data-table
-    :headers="headers"
-    :items="desserts"
-    sort-by="calories"
-    class="elevation-1"
-  >
+  <v-data-table :headers="headers" :items="lastname" sort-by="lastname"  :search="search" class="elevation-1">
     <template v-slot:top>
       <v-toolbar flat>
-        <v-toolbar-title>My CRUD</v-toolbar-title>
-        <v-divider
-          class="mx-4"
-          inset
-          vertical
-        ></v-divider>
-        <v-spacer></v-spacer>
-        <v-dialog
-          v-model="dialog"
-          max-width="500px"
-        >
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              color="primary"
-              dark
-              class="mb-2"
-              v-bind="attrs"
-              v-on="on"
-            >
-              New Item
-            </v-btn>
-          </template>
+        <v-toolbar-title>Alumnos</v-toolbar-title>
+        <v-divider class="mx-4" inset vertical></v-divider>
+        <v-text-field
+          v-model="search"
+          append-icon= "mdi-magnify"
+          label="Buscar alumno"
+          single-line
+          hide-details
+          class="d-flex pa-2"
+        ></v-text-field>
+
+        <!-- Empíeza el edit -->
+        <v-row justify="center">
+          <v-dialog v-model="dialog" persistent max-width="600px">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn color="primary" dark v-bind="attrs" v-on="on"> Agregar nuevo </v-btn>
+            </template>
+            <v-card>
+              <v-card-title>
+                <span class="text-h5">Nuevo Alumno</span>
+              </v-card-title>
+              <v-card-text>
+                <v-container>
+                  <v-row>
+                    <v-col cols="12" sm="6" md="6">
+                      <v-text-field label="Nombre" required v-model="editedItem.name"></v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="6">
+                      <v-text-field label="Apellido" required v-model="editedItem.lastname"></v-text-field>
+                    </v-col>
+                    <v-col cols="12">
+                      <v-text-field label="Correo" type="email" v-model="editedItem.email" required></v-text-field>
+                    </v-col>
+                    <v-col cols="12">
+                      <v-text-field label="Dirección" v-model="editedItem.address" required></v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="6">
+                      <v-text-field label="Telefono" type="number" v-model="editedItem.number" required></v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="6">
+                      <v-text-field label="Carnet" v-model="editedItem.carnet" required></v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="6">
+                      <v-select
+                        :items="['A', 'B', 'C', 'D']"
+                        label="Grupo"
+                        v-model="editedItem.group"
+                        required
+                      ></v-select>
+                    </v-col>
+                    <v-col cols="12" sm="6">
+                      <v-select
+                        :items="['1', '2', '3', '4']"
+                        label="Grado"
+                        v-model="editedItem.grade"
+                        required
+                      ></v-select>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" text @click="close"> Cerrar </v-btn>
+                <v-btn color="blue darken-1" text @click="save"> Guardar </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </v-row>
+        <!-- Termina el edit -->
+
+        <v-dialog v-model="dialogDelete" max-width="500px">
           <v-card>
-            <v-card-title>
-              <span class="text-h5">{{ formTitle }}</span>
-            </v-card-title>
-
-            <v-card-text>
-              <v-container>
-                <v-row>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="editedItem.name"
-                      label="Dessert name"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="editedItem.calories"
-                      label="Calories"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="editedItem.fat"
-                      label="Fat (g)"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="editedItem.carbs"
-                      label="Carbs (g)"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="editedItem.protein"
-                      label="Protein (g)"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-              </v-container>
-            </v-card-text>
-
+            <v-card-title class="text-h5">¿Estas seguro de eliminar este alumno?</v-card-title>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn
-                color="blue darken-1"
-                text
-                @click="close"
-              >
-                Cancel
-              </v-btn>
-              <v-btn
-                color="blue darken-1"
-                text
-                @click="save"
-              >
-                Save
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-        <v-dialog
-          v-model="dialogDelete"
-          max-width="500px"
-        >
-          <v-card>
-            <v-card-title class="text-h5">
-              Are you sure you want to delete this item?
-            </v-card-title>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn
-                color="blue darken-1"
-                text
-                @click="closeDelete"
-              >
-                Cancel
-              </v-btn>
-              <v-btn
-                color="blue darken-1"
-                text
-                @click="deleteItemConfirm"
-              >
-                OK
-              </v-btn>
+              <v-btn color="blue darken-1" text @click="closeDelete"> Cancelar </v-btn>
+              <v-btn color="primary" text @click="deleteItemConfirm"> Si, eliminar </v-btn>
               <v-spacer></v-spacer>
             </v-card-actions>
           </v-card>
         </v-dialog>
       </v-toolbar>
     </template>
-    <template v-slot:item.actions="{ item }">
-      <v-icon
-        small
-        class="mr-2"
-        @click="editItem(item)"
-      >
-        mdi-pencil
-      </v-icon>
-      <v-icon
-        small
-        @click="deleteItem(item)"
-      >
-        mdi-delete
-      </v-icon>
+    <template v-slot:[`item.actions`]="{ item }">
+      <v-icon small class="mr-2" @click="editItem(item)"> {{ icons.mdiPencil }} </v-icon>
+      <v-icon small @click="deleteItem(item)"> {{ icons.mdiDelete }} </v-icon>
     </template>
     <template v-slot:no-data>
-      <v-btn
-        color="primary"
-        @click="initialize"
-      >
-        Reset
-      </v-btn>
+      <v-btn color="primary" @click="initialize"> Reset </v-btn>
     </template>
   </v-data-table>
 </template>
 
 <script>
+import { mdiPencil, mdiDelete } from '@mdi/js'
+import axios from 'axios'
+
 export default {
   data: () => ({
+    search: '',
     dialog: false,
     dialogDelete: false,
     headers: [
       {
-        text: 'Dessert (100g serving)',
+        text: 'Apellidos',
         align: 'start',
-        sortable: false,
-        value: 'name',
+        value: 'lastname',
       },
-      { text: 'Calories', value: 'calories' },
-      { text: 'Fat (g)', value: 'fat' },
-      { text: 'Carbs (g)', value: 'carbs' },
-      { text: 'Protein (g)', value: 'protein' },
-      { text: 'Actions', value: 'actions', sortable: false },
+      { text: 'Nombre', value: 'name' },
+      { text: 'Carnet', value: 'carnet' },
+      { text: 'Dirección', value: 'address' },
+      { text: 'Correo', value: 'email' },
+      { text: 'Telefono', value: 'number' },
+      { text: 'Grado', value: 'grade' },
+      { text: 'Grupo', value: 'group' },
+      { text: 'Acciones', value: 'actions', sortable: false },
     ],
-    desserts: [],
+    lastname: [],
     editedIndex: -1,
     editedItem: {
+      lastname: '',
       name: '',
-      calories: 0,
-      fat: 0,
-      carbs: 0,
-      protein: 0,
+      carnet: 0,
+      address: '',
+      group: 0,
+      email: '',
+      number: 0,
+      grade: 0,
     },
     defaultItem: {
+      lastname: '',
       name: '',
-      calories: 0,
-      fat: 0,
-      carbs: 0,
-      protein: 0,
+      carnet: 0,
+      address: '',
+      group: 0,
+      email: '',
+      number: 0,
+      grade: 0,
     },
   }),
 
@@ -222,95 +164,83 @@ export default {
   },
 
   methods: {
-    initialize() {
-      this.desserts = [
+   async initialize() {
+
+      //Pruebas para hacer la API
+      //  const res =  await axios.get('https://notas-unicaes-api.herokuapp.com/api/students', {
+
+
+      // })
+      //  console.log(res.data);
+
+      this.lastname = [
         {
-          name: 'Frozen Yogurt',
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
+          lastname: 'Aguilar',
+          name: 'Julio',
+          carnet: '2019TT601',
+          address: 'santa ana',
+          group: 'A',
+          email: 'example@gmail.com',
+          number: 77885544,
+          grade: 1,
         },
         {
-          name: 'Ice cream sandwich',
-          calories: 237,
-          fat: 9.0,
-          carbs: 37,
-          protein: 4.3,
+          lastname: 'Palacios',
+          name: 'Diego',
+          carnet: '2019TT601',
+          address: 'santa ana',
+          group: 'A',
+          email: 'example@gmail.com',
+          number: 77885544,
+          grade: 1,
         },
         {
-          name: 'Eclair',
-          calories: 262,
-          fat: 16.0,
-          carbs: 23,
-          protein: 6.0,
+          lastname: 'Mario',
+          name: 'Carranza',
+          carnet: '2019TT601',
+          address: 'santa ana',
+          group: 'A',
+          email: 'example@gmail.com',
+          number: 77885544,
+          grade: 1,
         },
         {
-          name: 'Cupcake',
-          calories: 305,
-          fat: 3.7,
-          carbs: 67,
-          protein: 4.3,
+          lastname: 'Juarez',
+          name: 'Marco',
+          carnet: '2019TT601',
+          address: 'santa ana',
+          group: 'A',
+          email: 'example@gmail.com',
+          number: 77885544,
+          grade: 1,
         },
         {
-          name: 'Gingerbread',
-          calories: 356,
-          fat: 16.0,
-          carbs: 49,
-          protein: 3.9,
-        },
-        {
-          name: 'Jelly bean',
-          calories: 375,
-          fat: 0.0,
-          carbs: 94,
-          protein: 0.0,
-        },
-        {
-          name: 'Lollipop',
-          calories: 392,
-          fat: 0.2,
-          carbs: 98,
-          protein: 0,
-        },
-        {
-          name: 'Honeycomb',
-          calories: 408,
-          fat: 3.2,
-          carbs: 87,
-          protein: 6.5,
-        },
-        {
-          name: 'Donut',
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9,
-        },
-        {
-          name: 'KitKat',
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7,
+          lastname: 'Braghiroli',
+          name: 'Miguel',
+          carnet: '2019TT601',
+          address: 'santa ana',
+          group: 'A',
+          email: 'example@gmail.com',
+          number: 77885544,
+          grade: 1,
         },
       ]
     },
 
     editItem(item) {
-      this.editedIndex = this.desserts.indexOf(item)
+      this.editedIndex = this.lastname.indexOf(item)
       this.editedItem = { ...item }
       this.dialog = true
     },
 
     deleteItem(item) {
-      this.editedIndex = this.desserts.indexOf(item)
+      this.editedIndex = this.lastname.indexOf(item)
       this.editedItem = { ...item }
       this.dialogDelete = true
     },
 
     deleteItemConfirm() {
-      this.desserts.splice(this.editedIndex, 1)
+      this.lastname.splice(this.editedIndex, 1)
       this.closeDelete()
     },
 
@@ -332,12 +262,20 @@ export default {
 
     save() {
       if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem)
+        Object.assign(this.lastname[this.editedIndex], this.editedItem)
       } else {
-        this.desserts.push(this.editedItem)
+        this.lastname.push(this.editedItem)
       }
       this.close()
     },
+  },
+  setup() {
+    return {
+      icons: {
+        mdiPencil,
+        mdiDelete,
+      },
+    }
   },
 }
 </script>
