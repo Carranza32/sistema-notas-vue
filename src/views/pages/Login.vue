@@ -176,7 +176,9 @@ export default {
         email: this.email,
         password: this.password,
       })
-      console.log(res.data)
+
+      const { data: {access_token: token} } = res.data
+      localStorage.setItem('token', token)
       if (res.status) {
         window.location.href = 'http://localhost:8080/dashboard'
       }

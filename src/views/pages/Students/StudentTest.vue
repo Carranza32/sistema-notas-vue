@@ -1,12 +1,12 @@
 <template>
-  <v-data-table :headers="headers" :items="lastname" sort-by="lastname"  :search="search" class="elevation-1">
+  <v-data-table :headers="headers" :items="item" sort-by="last_name" :search="search" class="elevation-1">
     <template v-slot:top>
       <v-toolbar flat>
         <v-toolbar-title>Alumnos</v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
         <v-text-field
           v-model="search"
-          append-icon= "mdi-magnify"
+          append-icon="mdi-magnify"
           label="Buscar alumno"
           single-line
           hide-details
@@ -30,7 +30,7 @@
                       <v-text-field label="Nombre" required v-model="editedItem.name"></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="6" md="6">
-                      <v-text-field label="Apellido" required v-model="editedItem.lastname"></v-text-field>
+                      <v-text-field label="Apellido" required v-model="editedItem.last_name"></v-text-field>
                     </v-col>
                     <v-col cols="12">
                       <v-text-field label="Correo" type="email" v-model="editedItem.email" required></v-text-field>
@@ -39,7 +39,7 @@
                       <v-text-field label="Dirección" v-model="editedItem.address" required></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="6" md="6">
-                      <v-text-field label="Telefono" type="number" v-model="editedItem.number" required></v-text-field>
+                      <v-text-field label="Telefono" type="phone" v-model="editedItem.phone" required></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="6" md="6">
                       <v-text-field label="Carnet" v-model="editedItem.carnet" required></v-text-field>
@@ -48,7 +48,7 @@
                       <v-select
                         :items="['A', 'B', 'C', 'D']"
                         label="Grupo"
-                        v-model="editedItem.group"
+                        v-model="editedItem.group_id"
                         required
                       ></v-select>
                     </v-col>
@@ -56,7 +56,7 @@
                       <v-select
                         :items="['1', '2', '3', '4']"
                         label="Grado"
-                        v-model="editedItem.grade"
+                        v-model="editedItem.grade_id"
                         required
                       ></v-select>
                     </v-col>
@@ -99,6 +99,12 @@
 <script>
 import { mdiPencil, mdiDelete } from '@mdi/js'
 import axios from 'axios'
+//Variables globales
+const token = localStorage.getItem('token') || ''
+let _id = null
+const config = {
+  headers: { Authorization: `Bearer ${token}` },
+}
 
 export default {
   data: () => ({
@@ -109,38 +115,38 @@ export default {
       {
         text: 'Apellidos',
         align: 'start',
-        value: 'lastname',
+        value: 'last_name',
       },
       { text: 'Nombre', value: 'name' },
       { text: 'Carnet', value: 'carnet' },
       { text: 'Dirección', value: 'address' },
       { text: 'Correo', value: 'email' },
-      { text: 'Telefono', value: 'number' },
-      { text: 'Grado', value: 'grade' },
-      { text: 'Grupo', value: 'group' },
+      { text: 'Telefono', value: 'phone' },
+      { text: 'Grado', value: 'grade_id' },
+      { text: 'Grupo', value: 'group_id' },
       { text: 'Acciones', value: 'actions', sortable: false },
     ],
-    lastname: [],
+    item: [],
     editedIndex: -1,
     editedItem: {
-      lastname: '',
+      last_name: '',
       name: '',
-      carnet: 0,
+      carnet: '',
       address: '',
-      group: 0,
+      group_id: 0,
       email: '',
-      number: 0,
-      grade: 0,
+      phone: '',
+      grade_id: 0,
     },
     defaultItem: {
-      lastname: '',
+      last_name: '',
       name: '',
-      carnet: 0,
+      carnet: '',
       address: '',
-      group: 0,
+      group_id: 0,
       email: '',
-      number: 0,
-      grade: 0,
+      phone: '',
+      grade_id: 0,
     },
   }),
 
@@ -164,84 +170,36 @@ export default {
   },
 
   methods: {
-   async initialize() {
+    async initialize() {
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      }
 
-      //Pruebas para hacer la API
-      //  const res =  await axios.get('https://notas-unicaes-api.herokuapp.com/api/students', {
+      const res = await axios.get('https://notas-unicaes-api.herokuapp.com/api/students', config)
 
-
-      // })
-      //  console.log(res.data);
-
-      this.lastname = [
-        {
-          lastname: 'Aguilar',
-          name: 'Julio',
-          carnet: '2019TT601',
-          address: 'santa ana',
-          group: 'A',
-          email: 'example@gmail.com',
-          number: 77885544,
-          grade: 1,
-        },
-        {
-          lastname: 'Palacios',
-          name: 'Diego',
-          carnet: '2019TT601',
-          address: 'santa ana',
-          group: 'A',
-          email: 'example@gmail.com',
-          number: 77885544,
-          grade: 1,
-        },
-        {
-          lastname: 'Mario',
-          name: 'Carranza',
-          carnet: '2019TT601',
-          address: 'santa ana',
-          group: 'A',
-          email: 'example@gmail.com',
-          number: 77885544,
-          grade: 1,
-        },
-        {
-          lastname: 'Juarez',
-          name: 'Marco',
-          carnet: '2019TT601',
-          address: 'santa ana',
-          group: 'A',
-          email: 'example@gmail.com',
-          number: 77885544,
-          grade: 1,
-        },
-        {
-          lastname: 'Braghiroli',
-          name: 'Miguel',
-          carnet: '2019TT601',
-          address: 'santa ana',
-          group: 'A',
-          email: 'example@gmail.com',
-          number: 77885544,
-          grade: 1,
-        },
-      ]
+      this.item = res.data.data
+      // console.log(this.item)
     },
 
     editItem(item) {
-      this.editedIndex = this.lastname.indexOf(item)
+      this.editedIndex = this.item.indexOf(item)
       this.editedItem = { ...item }
       this.dialog = true
     },
 
     deleteItem(item) {
-      this.editedIndex = this.lastname.indexOf(item)
+      _id = item.id
+      this.editedIndex = this.item.indexOf(item)
       this.editedItem = { ...item }
       this.dialogDelete = true
     },
 
-    deleteItemConfirm() {
-      this.lastname.splice(this.editedIndex, 1)
+    async deleteItemConfirm(e) {
+      this.item.splice(this.editedIndex, 1)
       this.closeDelete()
+
+      const res = await axios.delete(`https://notas-unicaes-api.herokuapp.com/api/students/${_id}`, config)
+      console.log(res.data)
     },
 
     close() {
@@ -262,9 +220,9 @@ export default {
 
     save() {
       if (this.editedIndex > -1) {
-        Object.assign(this.lastname[this.editedIndex], this.editedItem)
+        Object.assign(this.item[this.editedIndex], this.editedItem)
       } else {
-        this.lastname.push(this.editedItem)
+        this.item.push(this.editedItem)
       }
       this.close()
     },
