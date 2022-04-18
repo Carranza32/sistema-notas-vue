@@ -1,8 +1,6 @@
 <template>
   <div>
-    <p class="text-2xl mb-6">
-      Alumnos
-    </p>
+    <p class="text-2xl mb-6">Alumnos</p>
     <v-row>
       <v-col cols="12">
         <v-card>
@@ -13,25 +11,17 @@
               label="Buscar alumno"
               single-line
               hide-details
+              class="d-flex pa-2"
             ></v-text-field>
+            <!-- Empieza el form diaglo -->
+            <add-student></add-student>
+
+            <!-- Termina -->
           </v-card-title>
-          <v-data-table
-            :headers="headers"
-            :items="desserts"
-            :items-per-page="10"
-            :search="search"
-            class="elevation-1"
-          >
+          <v-data-table :headers="headers" :items="desserts" :items-per-page="10" :search="search" class="elevation-1">
             <template>
-              <v-icon
-                small
-                class="mr-2"
-              >
-                mdi-pencil
-              </v-icon>
-              <v-icon small>
-                mdi-delete
-              </v-icon>
+              <v-icon small class="mr-2"> mdi-pencil </v-icon>
+              <v-icon small> mdi-delete </v-icon>
             </template>
           </v-data-table>
         </v-card>
@@ -41,7 +31,10 @@
 </template>
 
 <script>
+import AddStudent from '@/views/pages/Students/AddStudent.vue'
+
 export default {
+  components: { AddStudent },
   setup() {},
 
   data() {
