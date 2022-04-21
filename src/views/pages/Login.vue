@@ -40,7 +40,7 @@
               placeholder="john@example.com"
               hide-details
               class="mb-3"
-            ></v-text-field>
+            >example@fake.com</v-text-field>
 
             <v-text-field
               v-model="password"
@@ -51,13 +51,13 @@
               :append-icon="isPasswordVisible ? icons.mdiEyeOffOutline : icons.mdiEyeOutline"
               hide-details
               @click:append="isPasswordVisible = !isPasswordVisible"
-            ></v-text-field>
+            >secret1234</v-text-field>
 
             <div class="d-flex align-center justify-space-between flex-wrap">
               <v-checkbox label="Recordar usuario" hide-details class="me-3 mt-1"> </v-checkbox>
 
               <!-- forgot link -->
-              <a href="javascript:void(0)" class="mt-1"> Olvidaste tu contraseña? </a>
+              <a href="javascript:void(0)" class="mt-1"> ¿Olvidaste tu contraseña? </a>
             </div>
             <!-- divider -->
             <v-card-text class="d-flex align-center mt-2">
@@ -72,7 +72,7 @@
 
         <!-- create new account  -->
         <v-card-text class="d-flex align-center justify-center flex-wrap mt-2">
-          <span class="me-2"> Eres nuevo en la plataforma? </span>
+          <span class="me-2"> ¿Eres nuevo en la plataforma? </span>
           <router-link :to="{ name: 'pages-register' }"> Solicita creacion de cuenta </router-link>
         </v-card-text>
 
@@ -176,7 +176,9 @@ export default {
         email: this.email,
         password: this.password,
       })
-      console.log(res.data)
+
+      const { data: {access_token: token} } = res.data
+      localStorage.setItem('token', token)
       if (res.status) {
         window.location.href = 'http://localhost:8080/dashboard'
       }

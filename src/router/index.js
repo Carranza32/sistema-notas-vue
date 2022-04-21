@@ -101,6 +101,16 @@ const routes = [
     meta: { roles: ['admin'], requiredLogin: true }
   },
   {
+    path: '/pages/addstudent',
+    name: 'pages-addstudent',
+    component: () => import('@/views/pages/Students/AddStudent.vue'),
+  },
+  {
+    path: '/pages/test',
+    name: 'pages-test',
+    component: () => import('@/views/pages/Students/StudentTest.vue'),
+  },
+  {
     path: '/error-404',
     name: 'error-404',
     component: () => import('@/views/Error.vue'),
