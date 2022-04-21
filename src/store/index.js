@@ -4,8 +4,18 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  state: {},
-  mutations: {},
+  state: {
+    isAuthenticated: false,
+    role: null,
+  },
+  mutations: {
+    setAuthenticated(state, status){
+      state.isAuthenticated = status;
+    },
+    setRole(state, status){
+      state.role = status;
+    }
+  },
   actions: {},
   modules: {},
 })
