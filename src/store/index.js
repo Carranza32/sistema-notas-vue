@@ -7,6 +7,7 @@ export default new Vuex.Store({
   state: {
     isAuthenticated: false,
     role: null,
+    token: null,
   },
   mutations: {
     setAuthenticated(state, status){
@@ -14,6 +15,9 @@ export default new Vuex.Store({
     },
     setRole(state, status){
       state.role = status;
+    },
+    setToken(state, status){
+      state.token = status;
     }
   },
   actions: {},

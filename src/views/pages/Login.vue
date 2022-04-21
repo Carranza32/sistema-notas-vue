@@ -129,6 +129,8 @@
 import { mdiFacebook, mdiTwitter, mdiGithub, mdiGoogle, mdiEyeOutline, mdiEyeOffOutline } from '@mdi/js'
 import { ref } from '@vue/composition-api'
 import axios from 'axios'
+import Swal from 'sweetalert2'
+import store from '../../store/index'
 
 export default {
   setup() {
@@ -172,15 +174,38 @@ export default {
   },
   methods: {
     async login() {
-      const res = await axios.post('https://notas-unicaes-api.herokuapp.com/api/login', {
+      const res = await axios.post('http://localhost:8000/api/login', {
         email: this.email,
         password: this.password,
       })
 
-      const { data: {access_token: token} } = res.data
-      localStorage.setItem('token', token)
       if (res.status) {
-        window.location.href = 'http://localhost:8080/dashboard'
+        const { data: {access_token: token, role: role} } = res.data
+
+        store.commit('setAuthenticated', true);
+        store.commit('setRole', role);
+        store.commit('setToken', token);
+
+        localStorage.setItem('token', token);
+        localStorage.setItem('role', role);
+        localStorage.setItem('isAuthenticated', true);
+
+        console.log(store.state)
+
+        Swal.fire({
+          title: 'Iniciaste sesion!',
+          icon: 'success',
+          confirmButtonText: 'Ok'
+        })
+
+        this.$router.replace('/')
+      }else{
+        Swal.fire({
+          title: 'Error!',
+          text: 'Credenciales inválidas',
+          icon: 'error',
+          confirmButtonText: 'Ok'
+        })
       }
     },
   },

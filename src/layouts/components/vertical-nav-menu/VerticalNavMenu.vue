@@ -43,23 +43,32 @@
         :icon="icons.mdiHomeOutline"
       ></nav-menu-link>
 
+      <nav-menu-group
+        title="Administración"
+        :icon="icons.mdiCogOutline"
+      >
+
         <nav-menu-link
           title="Materias"
-          :to="{ name: 'pages-subject' }"
+          :to="{ name: 'admin-subject' }"
           :icon="icons.mdiBookOpenVariant"
         ></nav-menu-link>
 
         <nav-menu-link
           title="Docentes"
-          :to="{ name: 'pages-teacher' }"
+          :to="{ name: 'admin-teacher' }"
           :icon="icons.mdiAccountCircle"
         ></nav-menu-link>
 
         <nav-menu-link
           title="Alumnos"
-          :to="{ name: 'pages-student' }"
+          :to="{ name: 'admin-student' }"
           :icon="icons.mdiAccountGroup"
         ></nav-menu-link>
+
+      </nav-menu-group>
+
+
 
         <nav-menu-link
           title="Registro de notas"

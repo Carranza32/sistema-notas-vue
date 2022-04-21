@@ -5,52 +5,79 @@ import store from '../store/index'
 Vue.use(VueRouter)
 
 const routes = [
+  //Admin routes
   {
     path: '/',
     redirect: 'dashboard',
-    meta: { roles: ['admin'], requiredLogin: true }
+    meta: { roles: ['Administrador'], requiredLogin: true }
   },
+  {
+    path: '/admin/materias',
+    name: 'admin-subject',
+    component: () => import('@/views/pages/admin/Subject/Subject.vue'),
+    meta: { roles: ['Administrador'], requiredLogin: true }
+  },
+  {
+    path: '/admin/student',
+    name: 'admin-student',
+    component: () => import('@/views/pages/admin/Students/Student.vue'),
+    meta: { roles: ['Administrador'], requiredLogin: true }
+  },
+  {
+    path: '/admin/docentes',
+    name: 'admin-teacher',
+    component: () => import('@/views/pages/admin/Teacher/Teacher.vue'),
+    meta: { roles: ['Administrador'], requiredLogin: true }
+  },
+
+
+
+
+
+
+
+
   {
     path: '/dashboard',
     name: 'dashboard',
     component: () => import('@/views/dashboard/Dashboard.vue'),
-    meta: { roles: ['admin'], requiredLogin: true }
+    meta: { roles: ['Administrador'], requiredLogin: true }
   },
   {
     path: '/typography',
     name: 'typography',
     component: () => import('@/views/typography/Typography.vue'),
-    meta: { roles: ['admin'], requiredLogin: true }
+    meta: { roles: ['Administrador'], requiredLogin: true }
   },
   {
     path: '/icons',
     name: 'icons',
     component: () => import('@/views/icons/Icons.vue'),
-    meta: { roles: ['admin'], requiredLogin: true }
+    meta: { roles: ['Administrador'], requiredLogin: true }
   },
   {
     path: '/cards',
     name: 'cards',
     component: () => import('@/views/cards/Card.vue'),
-    meta: { roles: ['admin'], requiredLogin: true }
+    meta: { roles: ['Administrador'], requiredLogin: true }
   },
   {
     path: '/simple-table',
     name: 'simple-table',
     component: () => import('@/views/simple-table/SimpleTable.vue'),
-    meta: { roles: ['admin'], requiredLogin: true }
+    meta: { roles: ['Administrador'], requiredLogin: true }
   },
   {
     path: '/form-layouts',
     name: 'form-layouts',
     component: () => import('@/views/form-layouts/FormLayouts.vue'),
-    meta: { roles: ['admin'], requiredLogin: true }
+    meta: { roles: ['Administrador'], requiredLogin: true }
   },
   {
     path: '/pages/account-settings',
     name: 'pages-account-settings',
     component: () => import('@/views/pages/account-settings/AccountSettings.vue'),
-    meta: { roles: ['admin'], requiredLogin: true }
+    meta: { roles: ['Administrador'], requiredLogin: true }
   },
   {
     path: '/pages/login',
@@ -70,45 +97,12 @@ const routes = [
       requiredLogin: false
     },
   },
-  {
-    path: '/pages/subject',
-    name: 'pages-subject',
-    component: () => import('@/views/pages/Subjects/Subject.vue'),
-    meta: { roles: ['admin'], requiredLogin: true }
-  },
-  {
-    path: '/pages/student',
-    name: 'pages-student',
-    component: () => import('@/views/pages/Students/Student.vue'),
-    meta: { roles: ['admin'], requiredLogin: true }
-  },
-  {
-    path: '/pages/teacher',
-    name: 'pages-teacher',
-    component: () => import('@/views/pages/Teacher/Teacher.vue'),
-    meta: { roles: ['admin'], requiredLogin: true }
-  },
+
   {
     path: '/pages/report',
     name: 'pages-report',
     component: () => import('@/views/pages/Reports/Report.vue'),
-    meta: { roles: ['admin'], requiredLogin: true }
-  },
-  {
-    path: '/pages/grades',
-    name: 'pages-grades',
-    component: () => import('@/views/pages/Grade/Grade.vue'),
-    meta: { roles: ['admin'], requiredLogin: true }
-  },
-  {
-    path: '/pages/addstudent',
-    name: 'pages-addstudent',
-    component: () => import('@/views/pages/Students/AddStudent.vue'),
-  },
-  {
-    path: '/pages/test',
-    name: 'pages-test',
-    component: () => import('@/views/pages/Students/StudentTest.vue'),
+    meta: { roles: ['Administrador'], requiredLogin: true }
   },
   {
     path: '/error-404',
@@ -133,7 +127,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   console.log(store.state.isAuthenticated)
 
-  if (!store.state.isAuthenticated && to.meta.requiredLogin == true) {
+  if (!localStorage.getItem('isAuthenticated') && to.meta.requiredLogin == true) {
     //No ha iniciado sesion
     next({ name: 'pages-login' })
   }
