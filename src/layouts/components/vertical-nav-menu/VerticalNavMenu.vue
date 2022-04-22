@@ -43,7 +43,7 @@
         :icon="icons.mdiHomeOutline"
       ></nav-menu-link>
 
-      <nav-menu-group
+      <nav-menu-group v-if="showAdminMenu"
         title="Administración"
         :icon="icons.mdiCogOutline"
       >
@@ -68,12 +68,10 @@
 
       </nav-menu-group>
 
-
-
         <nav-menu-link
-          title="Registro de notas"
-          :to="{ name: 'pages-grades' }"
-          :icon="icons.mdiBookPlusMultiple"
+          title="Mis materias"
+          :to="{ name: 'teacher-subjects' }"
+          :icon="icons.mdiBookOpenVariant"
         ></nav-menu-link>
 
         <nav-menu-link
@@ -172,8 +170,26 @@ export default {
       default: null,
     },
   },
+  methods: {
+    mounted(){
+      if (localStorage.getItem('role') == "Administrador") {
+        this.showAdminMenu = true;
+      }
+
+      if (localStorage.getItem('role') == "Profesor") {
+        this.showTeacherMenu = true;
+      }
+
+      if (localStorage.getItem('role') == "Estudiante") {
+        this.showStudentMenu = true;
+      }
+    }
+  },
   setup() {
     return {
+      showAdminMenu: false,
+      showTeacherMenu: false,
+      showStudentMenu: false,
       icons: {
         mdiHomeOutline,
         mdiAlphaTBoxOutline,
@@ -191,7 +207,7 @@ export default {
         mdiFileChartOutline,
       },
     }
-  },
+  }
 }
 </script>
 

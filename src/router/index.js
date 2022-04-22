@@ -30,6 +30,19 @@ const routes = [
     meta: { roles: ['Administrador'], requiredLogin: true }
   },
 
+  //Teachers routes
+  {
+    path: '/docentes/materias',
+    name: 'teacher-subjects',
+    component: () => import('@/views/pages/Teacher/MySubjects.vue'),
+    meta: { roles: ['Profesor'], requiredLogin: true }
+  },
+  {
+    path: '/docentes/materia/detalle',
+    name: 'teacher-subject-details',
+    component: () => import('@/views/pages/Teacher/SubjectDetail.vue'),
+    meta: { roles: ['Profesor'], requiredLogin: true }
+  },
 
 
 
@@ -41,7 +54,7 @@ const routes = [
     path: '/dashboard',
     name: 'dashboard',
     component: () => import('@/views/dashboard/Dashboard.vue'),
-    meta: { roles: ['Administrador'], requiredLogin: true }
+    meta: { requiredLogin: true }
   },
   {
     path: '/typography',
@@ -80,7 +93,7 @@ const routes = [
     meta: { roles: ['Administrador'], requiredLogin: true }
   },
   {
-    path: '/pages/login',
+    path: '/login',
     name: 'pages-login',
     component: () => import('@/views/pages/Login.vue'),
     meta: {
@@ -125,15 +138,13 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  console.log(store.state.isAuthenticated)
-
   if (!localStorage.getItem('isAuthenticated') && to.meta.requiredLogin == true) {
     //No ha iniciado sesion
     next({ name: 'pages-login' })
   }
 
-
-  // if (store.state?.role !== to.meta.roles) {
+  console.log()
+  // if ( localStorage.getItem('role') !== to.meta.roles) {
   //   //No hay permisos
   //   next({ name: 'dashboard' })
   // }
