@@ -139,7 +139,7 @@
       <v-divider class="my-2"></v-divider>
 
       <!-- Logout -->
-      <v-list-item link>
+      <v-list-item link @click="logout()">
         <v-list-item-icon class="me-2">
           <v-icon size="22">
             {{ icons.mdiLogoutVariant }}
@@ -164,8 +164,23 @@ import {
   mdiHelpCircleOutline,
   mdiLogoutVariant,
 } from '@mdi/js'
+import { getWithToken } from '@/helpers/ApiService'
 
 export default {
+  methods:{
+    async logout(){
+      const response = await getWithToken('logout')
+      console.log(response)
+
+      if (response.status) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('role');
+        localStorage.removeItem('isAuthenticated');
+
+        this.$router.replace('login');
+      }
+    }
+  },
   setup() {
     return {
       icons: {
