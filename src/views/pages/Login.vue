@@ -172,11 +172,12 @@ export default {
   },
   methods: {
     async login() {
-      const res = await axios.post('https://notas-unicaes-api.herokuapp.com/api/login', {
+      const res = await axios.post('http://127.0.0.1:8000/api/login', {
         email: this.email,
         password: this.password,
-      })
 
+      })
+console.log(res);
       const { data: {access_token: token} } = res.data
       localStorage.setItem('token', token)
       if (res.status) {

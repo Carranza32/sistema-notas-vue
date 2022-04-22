@@ -175,7 +175,7 @@ export default {
         headers: { Authorization: `Bearer ${token}` },
       }
 
-      const res = await axios.get('https://notas-unicaes-api.herokuapp.com/api/students', config)
+      const res = await axios.get('http://127.0.0.1:8000/api/students', config)
 
       this.item = res.data.data
       // console.log(this.item)
@@ -198,8 +198,11 @@ export default {
       this.item.splice(this.editedIndex, 1)
       this.closeDelete()
 
-      const res = await axios.delete(`https://notas-unicaes-api.herokuapp.com/api/students/${_id}`, config)
-      console.log(res.data)
+      // const res = await axios.delete(`https://notas-unicaes-api.herokuapp.com/api/students/${_id}`, config)
+      // console.log(res.data)
+
+
+
     },
 
     close() {
