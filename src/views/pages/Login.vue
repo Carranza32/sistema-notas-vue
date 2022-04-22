@@ -128,9 +128,9 @@
 // eslint-disable-next-line object-curly-newline
 import { mdiFacebook, mdiTwitter, mdiGithub, mdiGoogle, mdiEyeOutline, mdiEyeOffOutline } from '@mdi/js'
 import { ref } from '@vue/composition-api'
-import axios from 'axios'
 import Swal from 'sweetalert2'
 import store from '../../store/index'
+import { post } from '@/helpers/ApiService'
 
 export default {
   setup() {
@@ -174,13 +174,13 @@ export default {
   },
   methods: {
     async login() {
-      const res = await axios.post('http://localhost:8000/api/login', {
+      const res = await post('login', {
         email: this.email,
         password: this.password,
       })
 
       if (res.status) {
-        const { data: {access_token: token, role: role} } = res.data
+        const { data: {access_token: token, role: role} } = res
 
         store.commit('setAuthenticated', true);
         store.commit('setRole', role);

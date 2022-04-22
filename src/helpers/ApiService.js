@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const _baseUrl = 'http://127.0.0.1:8000/api/';
+const _baseUrl = 'https://notas-unicaes-api.herokuapp.com/api/';
 
 const config = {
   headers: {
@@ -30,6 +30,18 @@ export async function putWithToken(url, body) {
 
 export async function deleteWithToken(url) {
   const response = await axios.delete(`${_baseUrl}${url}`, config);
+
+  return response.data;
+}
+
+export async function get(url) {
+  const response = await axios.get(`${_baseUrl}${url}`, config);
+
+  return response.data;
+}
+
+export async function post(url, body) {
+  const response = await axios.post(`${_baseUrl}${url}`, body, config);
 
   return response.data;
 }
