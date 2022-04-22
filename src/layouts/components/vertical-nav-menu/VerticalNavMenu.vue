@@ -123,26 +123,11 @@ export default {
       default: null,
     },
   },
-  methods: {
-    mounted(){
-      if (localStorage.getItem('role') == "Administrador") {
-        this.showAdminMenu = true;
-      }
-
-      if (localStorage.getItem('role') == "Profesor") {
-        this.showTeacherMenu = true;
-      }
-
-      if (localStorage.getItem('role') == "Estudiante") {
-        this.showStudentMenu = true;
-      }
-    }
-  },
   setup() {
     return {
-      showAdminMenu: false,
-      showTeacherMenu: false,
-      showStudentMenu: false,
+      showAdminMenu: localStorage.getItem('role') == "Administrador",
+      showTeacherMenu: localStorage.getItem('role') == "Profesor",
+      showStudentMenu: localStorage.getItem('role') == "Estudiante",
       icons: {
         mdiHomeOutline,
         mdiAlphaTBoxOutline,
