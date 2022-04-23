@@ -29,6 +29,12 @@ const routes = [
     component: () => import('@/views/pages/admin/Teacher/Teacher.vue'),
     meta: { roles: ['Administrador'], requiredLogin: true }
   },
+  {
+    path: 'admin/materias',
+    name: 'students-subjects',
+    component: () => import('@/views/pages/admin/Students/StudentTest.vue'),
+    meta: { roles: ['Administrador'], requiredLogin: true }
+  },
 
   //Teachers routes
   {
@@ -42,6 +48,21 @@ const routes = [
     name: 'teacher-subject-details',
     component: () => import('@/views/pages/Teacher/SubjectDetail.vue'),
     meta: { roles: ['Profesor'], requiredLogin: true }
+  },
+
+
+  //Students routes
+  {
+    path: '/alumnos/materias',
+    name: 'students-notadmin-subjects',
+    component: () => import('@/views/pages/Student/Subjects.vue'),
+    meta: { roles: ['Estudiante'], requiredLogin: true }
+  },
+  {
+    path: '/alumnos/materia/detalle',
+    name: 'students-subjects-detail',
+    component: () => import('@/views/pages/Student/SubjectDetail.vue'),
+    meta: { roles: ['Estudiante'], requiredLogin: true }
   },
 
 

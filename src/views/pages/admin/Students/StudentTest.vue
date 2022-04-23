@@ -98,7 +98,7 @@
 
 <script>
 import { mdiPencil, mdiDelete } from '@mdi/js'
-import axios from 'axios'
+import { deleteWithToken, getWithToken, postWithToken, putWithToken } from '@/helpers/ApiService'
 //Variables globales
 const token = localStorage.getItem('token') || ''
 let _id = null
@@ -171,20 +171,19 @@ export default {
 
   methods: {
     async initialize() {
-      const config = {
-        headers: { Authorization: `Bearer ${token}` },
-      }
 
-      const res = await axios.get('https://notas-unicaes-api.herokuapp.com/api/students', config)
 
-      this.item = res.data.data
-      // console.log(this.item)
+      const res = await getWithToken('students')
+      console.log(res);
+      this.item = res.data
+      console.log(this.item)
     },
 
     editItem(item) {
       this.editedIndex = this.item.indexOf(item)
       this.editedItem = { ...item }
       this.dialog = true
+      putWithToken(`students/${id}`)
     },
 
     deleteItem(item) {
@@ -198,7 +197,7 @@ export default {
       this.item.splice(this.editedIndex, 1)
       this.closeDelete()
 
-      const res = await axios.delete(`https://notas-unicaes-api.herokuapp.com/api/students/${_id}`, config)
+      const res = await deleteWithToken(`students/${_id}`)
       console.log(res.data)
     },
 

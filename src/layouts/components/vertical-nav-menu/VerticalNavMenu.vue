@@ -62,19 +62,25 @@
 
         <nav-menu-link
           title="Alumnos"
-          :to="{ name: 'admin-student' }"
+          :to="{ name: 'students-subjects' }"
           :icon="icons.mdiAccountGroup"
         ></nav-menu-link>
 
       </nav-menu-group>
 
-        <nav-menu-link
+        <nav-menu-link v-if="showTeacherMenu"
           title="Mis materias"
           :to="{ name: 'teacher-subjects' }"
           :icon="icons.mdiBookOpenVariant"
         ></nav-menu-link>
 
-        <nav-menu-link
+        <nav-menu-link v-if="showStudentMenu"
+          title="Mis materias"
+          :to="{ name: 'students-notadmin-subjects' }"
+          :icon="icons.mdiBookOpenVariant"
+        ></nav-menu-link>
+
+        <nav-menu-link v-if="showAdminMenu"
           title="Reportes"
           :to="{ name: 'pages-report' }"
           :icon="icons.mdiFileChartOutline"

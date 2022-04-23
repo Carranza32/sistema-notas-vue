@@ -42,7 +42,7 @@
               class="mb-3"
             >example@fake.com</v-text-field>
 
-            <v-text-field
+            <v-text-field @keyup.enter="login"
               v-model="password"
               outlined
               :type="isPasswordVisible ? 'text' : 'password'"
@@ -189,8 +189,6 @@ export default {
         localStorage.setItem('token', token);
         localStorage.setItem('role', role);
         localStorage.setItem('isAuthenticated', true);
-
-        console.log(store.state)
 
         Swal.fire({
           title: 'Iniciaste sesion!',

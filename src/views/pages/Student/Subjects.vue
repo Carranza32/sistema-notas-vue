@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p class="text-2xl mb-6">Mis Materias</p>
+    <p class="text-2xl mb-6">Materias inscritas</p>
     <v-row>
       <v-col lg="4" cols="12" v-for="item in items">
         <v-card>
@@ -22,7 +22,7 @@
                       {{ mdiAccountSupervisor }}
                     </v-icon>
                   </v-avatar>
-                  20 Estudiantes inscritos
+                  8.5 Promedio general
                 </span>
               </v-card-text>
               <v-card-actions class="dense">
@@ -46,15 +46,17 @@ export default {
       mdiAccountSupervisor,
       mdiDotsVertical,
       items: [
-        'Lenguaje',
+        'Ciencias',
+        'Ed. Física',
         'Matemática',
+        'Lenguaje',
         'Sociales',
       ]
     }
   },
   methods: {
     SubjectDetails(){
-      this.$router.push({name: 'teacher-subject-details'})
+      this.$router.push({name: 'students-subjects-detail'})
     }
   }
 }

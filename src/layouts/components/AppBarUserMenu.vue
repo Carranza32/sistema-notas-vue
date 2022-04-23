@@ -177,7 +177,7 @@ export default {
         localStorage.removeItem('role');
         localStorage.removeItem('isAuthenticated');
 
-        this.$router.replace('login');
+        this.$router.replace('/login');
       }
     }
   },
