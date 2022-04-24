@@ -1,8 +1,8 @@
 <template>
   <div>
-    <p class="text-2xl mb-6">Mis Materias</p>
+    <p class="text-2xl mb-6">Mis Aulas</p>
     <v-row>
-      <v-col lg="4" cols="12" v-for="item in items">
+      <v-col lg="4" cols="12" v-for="item in items" :key="item">
         <v-card>
           <div class="d-flex flex-column-reverse">
             <div>
@@ -46,9 +46,9 @@ export default {
       mdiAccountSupervisor,
       mdiDotsVertical,
       items: [
-        'Lenguaje',
-        'Matemática',
-        'Sociales',
+        '5A',
+        '6B',
+        '7C',
       ]
     }
   },

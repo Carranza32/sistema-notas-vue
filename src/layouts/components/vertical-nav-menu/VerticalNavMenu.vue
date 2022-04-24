@@ -69,7 +69,7 @@
       </nav-menu-group>
 
         <nav-menu-link v-if="showTeacherMenu"
-          title="Mis materias"
+          title="Mis aulas"
           :to="{ name: 'teacher-subjects' }"
           :icon="icons.mdiBookOpenVariant"
         ></nav-menu-link>

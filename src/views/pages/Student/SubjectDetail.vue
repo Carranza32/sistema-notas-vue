@@ -11,12 +11,11 @@
         <div class="d-flex justify-space-between flex-wrap pt-5">
           <div class="me-2 mb-2">
             <v-card-title class="pt-0 px-0">
-              MATEMATICA 6TO GRADO
+              Julio Unicaes
             </v-card-title>
-            <v-card-subtitle class="text-xs pa-0">
+            <v-card-subtitle class="pa-0">
+              <p>Materia: Lenguaje 5 "B"</p>
               <p>DOCENTE: JOHN DOE</p>
-              <p>HORARIO: LUN (6:45 AM - 8:25 AM), JUEV LUN (6:45 AM - 8:25 AM)</p>
-              <p>ALUMNOS INSCRITOS: 3</p>
             </v-card-subtitle>
           </div>
         </div>
@@ -29,20 +28,54 @@
           <span class="font-weight-semibold">Estadisticas de la materia</span>
         </v-card-title>
         <v-row>
-          <v-col v-for="data in statisticsData" :key="data.title" cols="6" md="3" class="d-flex align-center">
-            <v-avatar size="44" :color="resolveStatisticsIconVariation(data.title).color" rounded class="elevation-1">
-              <v-icon dark color="white" size="30">
-                {{ resolveStatisticsIconVariation(data.title).icon }}
-              </v-icon>
-            </v-avatar>
-            <div class="ms-3">
-              <p class="text-xs mb-0">
-                {{ data.title }}
-              </p>
-              <h3 class="text-xl font-weight-semibold">
-                {{ data.total }}
-              </h3>
-            </div>
+          <v-col v-for="data in statisticsData" :key="data.title1" cols="12" md="12">
+            <v-row>
+              <v-col cols="12" lg="3" class="ms-3 d-flex align-center">
+                <v-avatar size="44" color="success" rounded class="elevation-1">
+                  <v-icon dark color="white" size="30">
+                    {{ icons.mdiTrendingUp }}
+                  </v-icon>
+                </v-avatar>
+                <div class="ms-3">
+                  <p class="text-xs mb-0">
+                    {{ data.title1 }}
+                  </p>
+                  <h3 class="text-xl font-weight-semibold">
+                    {{ data.total1 }}
+                  </h3>
+                </div>
+              </v-col>
+              <v-col cols="12" lg="3" class="ms-3 d-flex align-center">
+                <v-avatar size="44" color="success" rounded class="elevation-1">
+                  <v-icon dark color="white" size="30">
+                    {{ icons.mdiTrendingUp }}
+                  </v-icon>
+                </v-avatar>
+                <div class="ms-3">
+                  <p class="text-xs mb-0">
+                    {{ data.title2 }}
+                  </p>
+                  <h3 class="text-xl font-weight-semibold">
+                    {{ data.total2 }}
+                  </h3>
+                </div>
+              </v-col>
+              <v-col cols="12" lg="3" class="ms-3 d-flex align-center">
+                <v-avatar size="44" color="success" rounded class="elevation-1">
+                  <v-icon dark color="white" size="30">
+                    {{ icons.mdiTrendingUp }}
+                  </v-icon>
+                </v-avatar>
+                <div class="ms-3">
+                  <p class="text-xs mb-0">
+                    {{ data.title3 }}
+                  </p>
+                  <h3 class="text-xl font-weight-semibold">
+                    {{ data.total3 }}
+                  </h3>
+                </div>
+              </v-col>
+            </v-row>
           </v-col>
         </v-row>
         <!--Barra de progreso-->
@@ -61,31 +94,41 @@ export default {
   setup() {
     const statisticsData = [
       {
-        title: 'Ciclo 1',
-        total: '8.96',
+        title1: 'Nota 1 (30%)',
+        total1: '8.96',
+
+        title2: 'Nota 2 (30%)',
+        total2: '8.96',
+
+        title3: 'Nota 3 (35%)',
+        total3: '8.96',
       },
       {
-        title: 'Ciclo 2',
-        total: '8.96',
+        title1: 'Nota 1 (30%)',
+        total1: '8.96',
+
+        title2: 'Nota 2 (30%)',
+        total2: '8.96',
+
+        title3: 'Nota 3 (35%)',
+        total3: '8.96',
       },
       {
-        title: 'Ciclo 3',
-        total: '9.96',
-      },
-      {
-        title: 'Pomedio de final',
-        total: '8.96',
+        title1: 'Nota 1 (30%)',
+        total1: '8.96',
+
+        title2: 'Nota 2 (30%)',
+        total2: '8.96',
+
+        title3: 'Nota 3 (35%)',
+        total3: '8.96',
       },
     ]
     const resolveStatisticsIconVariation = data => {
-      if (data === 'Ciclo 1') return { icon: mdiTrendingUp, color: 'primary' }
-      if (data === 'Ciclo 2') return { icon: mdiTrendingUp, color: 'primary' }
-      if (data === 'Ciclo 3') return { icon: mdiTrendingUp, color: 'primary' }
-      if (data === 'Promedio de grupo') return { icon: mdiTrendingUp, color: 'primary' }
-
-      // if (data === 'Customers') return { icon: mdiAccountOutline, color: 'success' }
-      // if (data === 'Product') return { icon: mdiLabelOutline, color: 'warning' }
-      // if (data === 'Revenue') return { icon: mdiCurrencyUsd, color: 'info' }
+      if (data === 'Trimestre 1') return { icon: mdiTrendingUp, color: 'primary' }
+      if (data === 'Trimestre 2') return { icon: mdiTrendingUp, color: 'primary' }
+      if (data === 'Trimestre 3') return { icon: mdiTrendingUp, color: 'primary' }
+      if (data === 'Promedio final') return { icon: mdiTrendingUp, color: 'primary' }
 
       return { icon: mdiAccountOutline, color: 'success' }
     }

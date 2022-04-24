@@ -49,6 +49,12 @@ const routes = [
     component: () => import('@/views/pages/Teacher/SubjectDetail.vue'),
     meta: { roles: ['Profesor'], requiredLogin: true }
   },
+  {
+    path: '/docentes/materia/alumno',
+    name: 'teacher-subject-student',
+    component: () => import('@/views/pages/Teacher/StudentScores.vue'),
+    meta: { roles: ['Profesor'], requiredLogin: true }
+  },
 
 
   //Students routes

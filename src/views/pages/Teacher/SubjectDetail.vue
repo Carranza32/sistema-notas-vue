@@ -11,12 +11,11 @@
         <div class="d-flex justify-space-between flex-wrap pt-5">
           <div class="me-2 mb-2">
             <v-card-title class="pt-0 px-0">
-              MATEMATICA 6TO GRADO
+              5TO GRADO A
             </v-card-title>
             <v-card-subtitle class="text-xs pa-0">
-              <p>DOCENTE: JOHN DOE</p>
-              <p>HORARIO: LUN (6:45 AM - 8:25 AM), JUEV LUN (6:45 AM - 8:25 AM)</p>
-              <p>ALUMNOS INSCRITOS: 3</p>
+              <p>DOCENTE ENCARGADO: JOHN DOE</p>
+              <p>ALUMNOS INSCRITOS: 20</p>
             </v-card-subtitle>
           </div>
         </div>
@@ -26,7 +25,7 @@
 
       <v-card-text>
         <v-card-title class="align-start">
-          <span class="font-weight-semibold">Estadisticas de la materia</span>
+          <span class="font-weight-semibold">Estadisticas de grupo</span>
         </v-card-title>
         <v-row>
           <v-col v-for="data in statisticsData" :key="data.title" cols="6" md="3" class="d-flex align-center">
@@ -67,13 +66,10 @@
               <span>{{ Number((item.score1 + item.score2 + item.score3) / 3).toLocaleString('en-US', {maximumFractionDigits: 2}) }}</span>
             </template>
 
-            <template>
-              <v-icon small class="mr-2">
-                {{ icons.mdiPencil }}
-              </v-icon>
-              <v-icon small>
-                {{ icons.mdiDelete }}
-              </v-icon>
+            <template v-slot:[`item.actions`]>
+              <router-link :to="{ name: 'teacher-subject-student' }">
+                <v-btn small text color="primary">Ver notas</v-btn>
+              </router-link>
             </template>
           </v-data-table>
         </v-card>
@@ -91,15 +87,15 @@ export default {
   setup() {
     const statisticsData = [
       {
-        title: 'Ciclo 1',
+        title: 'Trimestre 1',
         total: '8.96',
       },
       {
-        title: 'Ciclo 2',
+        title: 'Trimestre 2',
         total: '8.96',
       },
       {
-        title: 'Ciclo 3',
+        title: 'Trimestre 3',
         total: '9.96',
       },
       {
@@ -108,14 +104,10 @@ export default {
       },
     ]
     const resolveStatisticsIconVariation = data => {
-      if (data === 'Ciclo 1') return { icon: mdiTrendingUp, color: 'primary' }
-      if (data === 'Ciclo 2') return { icon: mdiTrendingUp, color: 'primary' }
-      if (data === 'Ciclo 3') return { icon: mdiTrendingUp, color: 'primary' }
+      if (data === 'Trimestre 1') return { icon: mdiTrendingUp, color: 'primary' }
+      if (data === 'Trimestre 2') return { icon: mdiTrendingUp, color: 'primary' }
+      if (data === 'Trimestre 3') return { icon: mdiTrendingUp, color: 'primary' }
       if (data === 'Promedio de grupo') return { icon: mdiTrendingUp, color: 'primary' }
-
-      // if (data === 'Customers') return { icon: mdiAccountOutline, color: 'success' }
-      // if (data === 'Product') return { icon: mdiLabelOutline, color: 'warning' }
-      // if (data === 'Revenue') return { icon: mdiCurrencyUsd, color: 'info' }
 
       return { icon: mdiAccountOutline, color: 'success' }
     }
@@ -151,9 +143,9 @@ export default {
         { text: 'Carnet', value: 'uid' },
         { text: 'Grupo', value: 'group' },
         { text: 'e-mail', value: 'email' },
-        { text: 'Promedio 1', value: 'score1' },
-        { text: 'Promedio 2', value: 'score2' },
-        { text: 'Promedio 3', value: 'score3' },
+        { text: 'Trimestre 1', value: 'score1' },
+        { text: 'Trimestre 2', value: 'score2' },
+        { text: 'Trimestre 3', value: 'score3' },
         { text: 'Final', value: 'average' },
         { text: 'Acciones', value: 'actions', sortable: false },
       ],
