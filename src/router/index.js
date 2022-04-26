@@ -65,8 +65,9 @@ const routes = [
     meta: { roles: ['Estudiante'], requiredLogin: true }
   },
   {
-    path: '/alumnos/materia/detalle',
+    path: '/alumnos/materia/detalle/:id',
     name: 'students-subjects-detail',
+    props: true,
     component: () => import('@/views/pages/Student/SubjectDetail.vue'),
     meta: { roles: ['Estudiante'], requiredLogin: true }
   },

@@ -1,12 +1,13 @@
 import axios from 'axios'
 
-const _baseUrl = 'https://notas-unicaes-api.herokuapp.com/api/';
+// const _baseUrl = 'https://notas-unicaes-api.herokuapp.com/api/';
+const _baseUrl = 'http://localhost:8000/api/';
 
 const config = {
   headers: {
-    'Authorization': `Bearer ${localStorage.getItem('token')}`,
     'Content-Type': 'application/json',
     'Accept': 'application/json',
+    'Authorization': `Bearer ${localStorage.getItem('token')}`,
   }
 };
 

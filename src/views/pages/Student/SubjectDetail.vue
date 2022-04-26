@@ -11,11 +11,11 @@
         <div class="d-flex justify-space-between flex-wrap pt-5">
           <div class="me-2 mb-2">
             <v-card-title class="pt-0 px-0">
-              Julio Unicaes
+              {{ student.name }} {{ student.last_name }}
             </v-card-title>
             <v-card-subtitle class="pa-0">
-              <p>Materia: Lenguaje 5 "B"</p>
-              <p>DOCENTE: JOHN DOE</p>
+              <p>Materia: {{ }} {{ student.group.name }}</p>
+              <p>DOCENTE: {{ student.group.teacher.name }}</p>
             </v-card-subtitle>
           </div>
         </div>
@@ -28,7 +28,7 @@
           <span class="font-weight-semibold">Estadisticas de la materia</span>
         </v-card-title>
         <v-row>
-          <v-col v-for="data in statisticsData" :key="data.title1" cols="12" md="12">
+          <v-col v-for="data in scores" v-bind:key="data.id" cols="12" md="12">
             <v-row>
               <v-col cols="12" lg="3" class="ms-3 d-flex align-center">
                 <v-avatar size="44" color="success" rounded class="elevation-1">
@@ -38,10 +38,10 @@
                 </v-avatar>
                 <div class="ms-3">
                   <p class="text-xs mb-0">
-                    {{ data.title1 }}
+                    Nota 1 (30%)
                   </p>
                   <h3 class="text-xl font-weight-semibold">
-                    {{ data.total1 }}
+                    {{ data.period1_score1 }}
                   </h3>
                 </div>
               </v-col>
@@ -53,10 +53,10 @@
                 </v-avatar>
                 <div class="ms-3">
                   <p class="text-xs mb-0">
-                    {{ data.title2 }}
+                    Nota 2 (30%)
                   </p>
                   <h3 class="text-xl font-weight-semibold">
-                    {{ data.total2 }}
+                    {{ data.period1_score2 }}
                   </h3>
                 </div>
               </v-col>
@@ -68,10 +68,10 @@
                 </v-avatar>
                 <div class="ms-3">
                   <p class="text-xs mb-0">
-                    {{ data.title3 }}
+                    Nota 3 (35%)
                   </p>
                   <h3 class="text-xl font-weight-semibold">
-                    {{ data.total3 }}
+                    {{ data.period1_score3 }}
                   </h3>
                 </div>
               </v-col>
@@ -87,6 +87,7 @@
 
 <script>
 import { mdiPencil, mdiDelete, mdiAccountOutline, mdiCurrencyUsd, mdiTrendingUp, mdiDotsVertical, mdiLabelOutline } from '@mdi/js'
+import { getWithToken } from '@/helpers/ApiService'
 
 export default {
   // Estadisticas
@@ -154,6 +155,7 @@ export default {
   // Datos Tabla
   data() {
     return {
+      _id: this.$route.params.id,
       headers: [
         {
           text: 'Apellidos',
@@ -170,6 +172,9 @@ export default {
         { text: 'Final', value: 'average' },
         { text: 'Acciones', value: 'actions', sortable: false },
       ],
+      scores: [],
+      student: {},
+      subject: {},
       items: [
         {
           lastname: 'Aguilar Melgar',
@@ -209,5 +214,28 @@ export default {
 
     // Barra de progreso
   },
+  created() {
+    console.log(this.$route.params.id)
+    this.getData()
+  },
+
+  methods: {
+    async getData() {
+      const response = await getWithToken('students/subjects/'+this._id)
+      console.log(response)
+
+      if (response.status) {
+        this.scores = response.data.scores
+        this.student = response.data.student
+        this.subject = response.data.subject
+      }
+
+      console.log(this.student)
+      console.log(this.scores)
+      console.log(this.subject)
+
+    },
+
+  }
 }
 </script>

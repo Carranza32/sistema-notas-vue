@@ -180,7 +180,7 @@ export default {
       })
 
       if (res.status) {
-        const { data: {access_token: token, role: role} } = res
+        const { data: {access_token: token, role: role, user: user} } = res
 
         store.commit('setAuthenticated', true);
         store.commit('setRole', role);
@@ -189,6 +189,7 @@ export default {
         localStorage.setItem('token', token);
         localStorage.setItem('role', role);
         localStorage.setItem('isAuthenticated', true);
+        localStorage.setItem('user', JSON.stringify(user));
 
         Swal.fire({
           title: 'Iniciaste sesion!',
