@@ -40,9 +40,11 @@
               placeholder="john@example.com"
               hide-details
               class="mb-3"
-            >example@fake.com</v-text-field>
+              >example@fake.com</v-text-field
+            >
 
-            <v-text-field @keyup.enter="login"
+            <v-text-field
+              @keyup.enter="login"
               v-model="password"
               outlined
               :type="isPasswordVisible ? 'text' : 'password'"
@@ -51,7 +53,8 @@
               :append-icon="isPasswordVisible ? icons.mdiEyeOffOutline : icons.mdiEyeOutline"
               hide-details
               @click:append="isPasswordVisible = !isPasswordVisible"
-            >secret1234</v-text-field>
+              >secret1234</v-text-field
+            >
 
             <div class="d-flex align-center justify-space-between flex-wrap">
               <v-checkbox label="Recordar usuario" hide-details class="me-3 mt-1"> </v-checkbox>
@@ -180,30 +183,38 @@ export default {
       })
 
       if (res.status) {
-        const { data: {access_token: token, role: role, user: user} } = res
+        const {
+          data: { access_token: token, role: role, user: user },
+        } = res
 
-        store.commit('setAuthenticated', true);
-        store.commit('setRole', role);
-        store.commit('setToken', token);
+        store.commit('setAuthenticated', true)
+        store.commit('setRole', role)
+        store.commit('setToken', token)
 
-        localStorage.setItem('token', token);
-        localStorage.setItem('role', role);
-        localStorage.setItem('isAuthenticated', true);
-        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('token', token)
+        localStorage.setItem('role', role)
+        localStorage.setItem('isAuthenticated', true)
+        localStorage.setItem('user', JSON.stringify(user))
 
         Swal.fire({
           title: 'Iniciaste sesion!',
           icon: 'success',
-          confirmButtonText: 'Ok'
+          confirmButtonText: 'Ok',
         })
 
-        this.$router.replace('/')
-      }else{
+        if (role === 'Estudiante') {
+          this.$router.replace('/alumnos/materias')
+        } else if (role === 'Profesor') {
+          this.$router.replace('/docentes/materias')
+        } else if (role === 'Administrador') {
+          this.$router.replace('/admin/docentes')
+        }
+      } else {
         Swal.fire({
           title: 'Error!',
           text: 'Credenciales inválidas',
           icon: 'error',
-          confirmButtonText: 'Ok'
+          confirmButtonText: 'Ok',
         })
       }
     },

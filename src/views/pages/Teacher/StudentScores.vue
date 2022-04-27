@@ -95,7 +95,7 @@
             <v-text-field
               v-model="search"
               append-icon="mdi-magnify"
-              label="Buscar alumno"
+              label="Buscar materia"
               single-line
               hide-details
             ></v-text-field>
@@ -358,9 +358,11 @@ export default {
   data() {
     return {
       isLoading: false,
+
       minNumbers: v => v >= 1 || 'No puede ser 0',
       maxNumbers: v => v <= 10 || 'No puede ser mayor a 10',
       isNumber: v => !isNaN(v) || 'is not a number',
+
       headers: [
         { text: 'Materia', value: 'subject.name' },
         { text: 'Actividad 1 30%', value: 'period1_score1' },
@@ -393,6 +395,7 @@ export default {
 
   methods: {
     async save (item) {
+
       const response = await putWithToken('scores/'+item.id, item)
 
       if (response.status) {
@@ -414,6 +417,16 @@ export default {
       }
 
     },
+
+    isNumberCorrect(num) {
+        if (num < 1 || num > 10) {
+          return false
+        } else if (num > 1 && num <= 10) {
+          return true
+        }
+    }
+    ,
+
 
     async getData() {
       this.isLoading = true;

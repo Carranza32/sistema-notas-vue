@@ -10,25 +10,22 @@
   >
     <!-- Navigation Header -->
     <div class="vertical-nav-header d-flex items-center ps-6 pe-5 pt-5 pb-2">
-      <router-link
-        to="/"
-        class="d-flex align-center text-decoration-none"
-      >
+
         <v-img
           :src="require('@/assets/images/logos/logo.svg')"
-          max-height="30px"
-          max-width="30px"
+          max-height="66px"
+          max-width="250px"
           alt="logo"
           contain
           eager
           class="app-logo me-3"
         ></v-img>
-        <v-slide-x-transition>
+        <!-- <v-slide-x-transition>
           <h2 class="app-title text--primary">
-            TOP SCORE EDUCATION
+            Instituto Steve Jobs
           </h2>
-        </v-slide-x-transition>
-      </router-link>
+        </v-slide-x-transition> -->
+
     </div>
 
     <!-- Navigation Items -->
@@ -37,11 +34,6 @@
       shaped
       class="vertical-nav-menu-items pr-5"
     >
-      <nav-menu-link
-        title="Dashboard"
-        :to="{ name: 'dashboard' }"
-        :icon="icons.mdiHomeOutline"
-      ></nav-menu-link>
 
       <nav-menu-group v-if="showAdminMenu"
         title="Administración"
@@ -86,11 +78,7 @@
           :icon="icons.mdiFileChartOutline"
         ></nav-menu-link>
 
-      <nav-menu-link
-        title="Configuración"
-        :to="{ name: 'pages-account-settings'}"
-        :icon="icons.mdiAccountCogOutline"
-      ></nav-menu-link>
+
     </v-list>
   </v-navigation-drawer>
 </template>
