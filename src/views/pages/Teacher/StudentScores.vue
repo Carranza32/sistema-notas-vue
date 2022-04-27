@@ -91,7 +91,7 @@
     <v-row class="mt-5">
       <v-col cols="12">
         <v-card>
-          <v-btn raised elevation="2" color="primary" @click="xport()">Exportar</v-btn>
+          <v-btn outlined color="primary" @click="xport()">Exportar</v-btn>
           <v-card-title>
             <v-text-field
               v-model="search"
@@ -302,7 +302,7 @@ import {
   mdiDotsVertical,
   mdiLabelOutline,
 } from '@mdi/js'
-import { getWithToken, putWithToken } from '@/helpers/ApiService'
+import { get, getWithToken, putWithToken } from '@/helpers/ApiService'
 import Swal from 'sweetalert2'
 import {json2excel} from 'js2excel';
 
@@ -428,15 +428,7 @@ export default {
     },
 
     xport(){
-      try {
-        json2excel({
-            data: this.items,
-            name: 'Notas',
-            formateDate: 'yyyy/mm/dd'
-        });
-      } catch (e) {
-          console.error('export error');
-      }
+      window.open('https://notas-unicaes-api.herokuapp.com/api/export-student/'+this.$route.params.id, '_blank');
     },
 
 
