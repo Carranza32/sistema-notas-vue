@@ -28,10 +28,6 @@
       <v-tab-item>
         <account-settings-security></account-settings-security>
       </v-tab-item>
-
-      <v-tab-item>
-        <account-settings-info :information-data="accountSettingData.information"></account-settings-info>
-      </v-tab-item>
     </v-tabs-items>
   </v-card>
 </template>
@@ -58,7 +54,6 @@ export default {
     const tabs = [
       { title: 'Account', icon: mdiAccountOutline },
       { title: 'Security', icon: mdiLockOpenOutline },
-      { title: 'Info', icon: mdiInformationOutline },
     ]
 
     // account settings data

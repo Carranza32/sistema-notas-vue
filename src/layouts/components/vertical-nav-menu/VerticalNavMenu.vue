@@ -78,6 +78,12 @@
           :icon="icons.mdiFileChartOutline"
         ></nav-menu-link>
 
+        <nav-menu-link
+        title="Configuración"
+        :to="{ name: 'pages-account-settings'}"
+        :icon="icons.mdiAccountCogOutline"
+      ></nav-menu-link>
+
 
     </v-list>
   </v-navigation-drawer>

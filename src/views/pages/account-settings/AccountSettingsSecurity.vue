@@ -17,7 +17,7 @@
                 v-model="currentPassword"
                 :type="isCurrentPasswordVisible ? 'text' : 'password'"
                 :append-icon="isCurrentPasswordVisible ? icons.mdiEyeOffOutline:icons.mdiEyeOutline"
-                label="Contrase�a actual"
+                label="Contraseña actual"
                 outlined
                 dense
                 @click:append="isCurrentPasswordVisible = !isCurrentPasswordVisible"
@@ -28,10 +28,10 @@
                 v-model="newPassword"
                 :type="isNewPasswordVisible ? 'text' : 'password'"
                 :append-icon="isNewPasswordVisible ? icons.mdiEyeOffOutline:icons.mdiEyeOutline"
-                label="Nueva Contrase�a"
+                label="Nueva Contraseña"
                 outlined
                 dense
-                hint="Make sure it's at least 8 characters."
+                hint="Asegurate que sean 8 carácteres."
                 persistent-hint
                 @click:append="isNewPasswordVisible = !isNewPasswordVisible"
               ></v-text-field>
@@ -41,7 +41,7 @@
                 v-model="cPassword"
                 :type="isCPasswordVisible ? 'text' : 'password'"
                 :append-icon="isCPasswordVisible ? icons.mdiEyeOffOutline:icons.mdiEyeOutline"
-                label="Confirmar Nueva Contrase�a"
+                label="Confirmar Nueva Contraseña"
                 outlined
                 dense
                 class="mt-3"
@@ -63,56 +63,6 @@
               ></v-img>
             </v-col>
           </v-row>
-        </v-card-text>
-      </div>
-
-      <!-- divider -->
-      <v-divider></v-divider>
-
-      <div class="pa-3">
-        <v-card-title class="flex-nowrap">
-          <v-icon class="text--primary me-3">
-            {{ icons.mdiKeyOutline }}
-          </v-icon>
-          <span class="text-break">Autentificacion en dos pasos</span>
-        </v-card-title>
-
-        <v-card-text class="two-factor-auth text-center mx-auto">
-          <v-avatar
-            color="primary"
-            class="primary mb-4"
-            rounded
-          >
-            <v-icon
-              size="25"
-              color="white"
-            >
-              {{ icons.mdiLockOpenOutline }}
-            </v-icon>
-          </v-avatar>
-          <p class="text-base text--primary font-weight-semibold">
-            Autentificacion en dos pasos aun no esta habilitado.
-          </p>
-          <p class="text-sm text--primary">
-            Autentificacion en dos pasos agrega una capa adiconal de seguridad a tus inicios de sesion. Leer mas.
-          </p>
-        </v-card-text>
-
-        <!-- action buttons -->
-        <v-card-text>
-          <v-btn
-            color="primary"
-            class="me-3 mt-3"
-          >
-            Guardar Cambios
-          </v-btn>
-          <v-btn
-            color="secondary"
-            outlined
-            class="mt-3"
-          >
-            Cancelar
-          </v-btn>
         </v-card-text>
       </div>
     </v-form>

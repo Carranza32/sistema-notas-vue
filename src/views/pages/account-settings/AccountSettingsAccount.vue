@@ -53,19 +53,7 @@
             cols="12"
           >
             <v-text-field
-              v-model="accountDataLocale.username"
-              label="Usuario"
-              dense
-              outlined
-            ></v-text-field>
-          </v-col>
-
-          <v-col
-            md="6"
-            cols="12"
-          >
-            <v-text-field
-              v-model="accountDataLocale.name"
+              v-model="user.name"
               label="Nombre"
               dense
               outlined
@@ -77,7 +65,7 @@
             md="6"
           >
             <v-text-field
-              v-model="accountDataLocale.email"
+              v-model="user.email"
               label="E-mail"
               dense
               outlined
@@ -89,40 +77,15 @@
             md="6"
           >
             <v-text-field
-              v-model="accountDataLocale.role"
+              v-model="user.roles[0].name"
               dense
               label="Rol"
               outlined
             ></v-text-field>
           </v-col>
 
-          <v-col
-            cols="12"
-            md="6"
-          >
-            <v-select
-              v-model="accountDataLocale.status"
-              dense
-              outlined
-              label="Estado"
-              :items="status"
-            ></v-select>
-          </v-col>
-
-          <v-col
-            cols="12"
-            md="6"
-          >
-            <v-text-field
-              v-model="accountDataLocale.company"
-              dense
-              outlined
-              label="Company"
-            ></v-text-field>
-          </v-col>
-
           <!-- alert -->
-          <v-col cols="12">
+          <v-col cols="12" v-if="user.email_verified_at == null">
             <v-alert
               color="warning"
               text
@@ -201,5 +164,17 @@ export default {
       },
     }
   },
+  data() {
+    return {
+      user: null
+    }
+  },
+  mounted(){
+    if (localStorage.getItem('user')) {
+      let json = JSON.parse(localStorage.getItem('user'));
+
+      this.user = json;
+    }
+  }
 }
 </script>
