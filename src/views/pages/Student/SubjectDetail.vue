@@ -14,8 +14,8 @@
               {{ student.name }} {{ student.last_name }}
             </v-card-title>
             <v-card-subtitle class="pa-0">
-              <!-- <p>Materia: {{ student.group.teacher.subject.name }} {{ student.group.name }}</p>
-              <p>DOCENTE: {{ student.group.teacher.name }}</p> -->
+              <p>Materia: {{ subject.name }} {{ student.group.name }}</p>
+              <p>DOCENTE: {{ student.group.teacher.name }}</p>
             </v-card-subtitle>
           </div>
         </div>
@@ -98,7 +98,6 @@ export default {
   // Datos Tabla
   data() {
     return {
-      _id: this.$route.params.id,
       search: '',
 
       icons: {
@@ -115,21 +114,22 @@ export default {
         { text: 'Actividad 1 30%', value: 'period1_score1' },
         { text: 'Actividad 2 30%', value: 'period1_score2' },
         { text: 'Actividad 3 35%', value: 'period1_score3' },
-        { text: 'Trimestre 1', value: 'average1' },
+        { text: 'Trimestre 1', value: 'average_period1' },
 
         { text: 'Actividad 1 30%', value: 'period2_score1' },
         { text: 'Actividad 2 30%', value: 'period2_score2' },
         { text: 'Actividad 3 35%', value: 'period2_score3' },
-        { text: 'Trimestre 2', value: 'average2' },
+        { text: 'Trimestre 2', value: 'average_period2' },
 
         { text: 'Actividad 1 30%', value: 'period3_score1' },
         { text: 'Actividad 2 30%', value: 'period3_score2' },
         { text: 'Actividad 3 35%', value: 'period3_score3' },
-        { text: 'Trimestre 3', value: 'average3' },
+        { text: 'Trimestre 3', value: 'average_period3' },
       ],
 
       scores: [],
       student: {},
+      subject: {},
       subject: [],
       items: [],
     }
@@ -142,11 +142,12 @@ export default {
 
   methods: {
     async getData() {
-      const response = await getWithToken('students/subjects/'+this._id)
+      const response = await getWithToken('students/subjects/'+this.$route.params.id)
 
       if (response.status) {
         this.items = response.data.scores
         this.student = response.data.student
+        this.subject = response.data.subject
       	console.log(response.data)
       }
 
