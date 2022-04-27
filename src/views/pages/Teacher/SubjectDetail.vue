@@ -11,19 +11,19 @@
         <div class="d-flex justify-space-between flex-wrap pt-5">
           <div class="me-2 mb-2">
             <v-card-title class="pt-0 px-0">
-              5TO GRADO A
+              {{ group.name }}
             </v-card-title>
             <v-card-subtitle class="text-xs pa-0">
-              <p>DOCENTE ENCARGADO: JOHN DOE</p>
-              <p>ALUMNOS INSCRITOS: 20</p>
+              <p>DOCENTE ENCARGADO: {{ group.teacher.name }}</p>
+              <p>ALUMNOS INSCRITOS: {{ items.length }}</p>
             </v-card-subtitle>
           </div>
         </div>
       </v-card-text>
 
-      <v-divider></v-divider>
+      <!-- <v-divider></v-divider> -->
 
-      <v-card-text>
+      <!-- <v-card-text>
         <v-card-title class="align-start">
           <span class="font-weight-semibold">Estadisticas de grupo</span>
         </v-card-title>
@@ -44,8 +44,7 @@
             </div>
           </v-col>
         </v-row>
-        <!--Barra de progreso-->
-      </v-card-text>
+      </v-card-text> -->
 
     </v-card>
     <!--Tabla-->
@@ -62,12 +61,8 @@
             ></v-text-field>
           </v-card-title>
           <v-data-table :headers="headers" :items="items" :items-per-page="10" :search="search" class="elevation-1">
-            <template v-slot:[`item.average`]="{ item }">
-              <span>{{ Number((item.score1 + item.score2 + item.score3) / 3).toLocaleString('en-US', {maximumFractionDigits: 2}) }}</span>
-            </template>
-
-            <template v-slot:[`item.actions`]>
-              <router-link :to="{ name: 'teacher-subject-student' }">
+            <template v-slot:[`item.actions`]="{ item }">
+              <router-link :to="{ name: 'teacher-subject-student', params: { id: item.id } }">
                 <v-btn small text color="primary">Ver notas</v-btn>
               </router-link>
             </template>
@@ -80,42 +75,13 @@
 
 <script>
 import { mdiPencil, mdiDelete, mdiAccountOutline, mdiCurrencyUsd, mdiTrendingUp, mdiDotsVertical, mdiLabelOutline } from '@mdi/js'
+import { getWithToken } from '@/helpers/ApiService'
 
 export default {
-  // Estadisticas
-
-  setup() {
-    const statisticsData = [
-      {
-        title: 'Trimestre 1',
-        total: '8.96',
-      },
-      {
-        title: 'Trimestre 2',
-        total: '8.96',
-      },
-      {
-        title: 'Trimestre 3',
-        total: '9.96',
-      },
-      {
-        title: 'Pomedio de grupo',
-        total: '8.96',
-      },
-    ]
-    const resolveStatisticsIconVariation = data => {
-      if (data === 'Trimestre 1') return { icon: mdiTrendingUp, color: 'primary' }
-      if (data === 'Trimestre 2') return { icon: mdiTrendingUp, color: 'primary' }
-      if (data === 'Trimestre 3') return { icon: mdiTrendingUp, color: 'primary' }
-      if (data === 'Promedio de grupo') return { icon: mdiTrendingUp, color: 'primary' }
-
-      return { icon: mdiAccountOutline, color: 'success' }
-    }
-
+  // Datos Tabla
+  data() {
     return {
       search: '',
-      statisticsData,
-      resolveStatisticsIconVariation,
 
       // icons
       icons: {
@@ -127,66 +93,43 @@ export default {
         mdiPencil,
         mdiDelete,
       },
-    }
-  },
 
-  // Datos Tabla
-  data() {
-    return {
       headers: [
-        {
-          text: 'Apellidos',
-          align: 'start',
-          value: 'lastname',
-        },
+        { text: 'Apellidos', value: 'last_name' },
         { text: 'Nombre', value: 'name' },
-        { text: 'Carnet', value: 'uid' },
-        { text: 'Grupo', value: 'group' },
+
+        // { text: 'Carnet', value: 'uid' },
+        // { text: 'Grupo', value: 'group.name' },
         { text: 'e-mail', value: 'email' },
-        { text: 'Trimestre 1', value: 'score1' },
-        { text: 'Trimestre 2', value: 'score2' },
-        { text: 'Trimestre 3', value: 'score3' },
-        { text: 'Final', value: 'average' },
+        { text: 'Dirección', value: 'address' },
+        { text: 'Teléfono', value: 'phone' },
+        // { text: 'Trimestre 3', value: 'average_period3' },
+        // { text: 'Final', value: 'final_average' },
+
         { text: 'Acciones', value: 'actions', sortable: false },
       ],
-      items: [
-        {
-          lastname: 'Aguilar Melgar',
-          name: 'Julio Isrrael',
-          uid: '2019AG000',
-          group: 1,
-          email: '2019AG000@sj.com',
-          score1: 9,
-          score2: 8.5,
-          score3: 7,
-          average: 0.0,
-        },
-        {
-          lastname: 'Carranza Rivas',
-          name: 'Mario Ernesto',
-          uid: '2018CR001',
-          group: 1,
-          email: '2018CR001@sj.com',
-          score1: 9.6,
-          score2: 5,
-          score3: 7,
-          average: 0.0,
-        },
-        {
-          lastname: 'Palacios Ayala',
-          name: 'Diego Ernesto',
-          uid: '2019PA002',
-          group: 1,
-          email: '2019PA002@sj.com',
-          score1: 7,
-          score2: 7.2,
-          score3: 8.3,
-          average: 0.0,
-        },
-      ],
+      items: [],
+      group: null,
     }
-
-    // Barra de progreso
   },
+
+  mounted() {
+    this.getData()
+  },
+
+  methods: {
+    async getData() {
+      console.log(this.$route.params.id)
+      const response = await getWithToken('groups/find/'+ this.$route.params.id)
+
+      if (response.status) {
+        this.items = response.data.students
+        this.group = response.data
+      	console.log(response.data)
+      }
+
+    },
+
+  }
 }
 </script>

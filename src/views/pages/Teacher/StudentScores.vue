@@ -31,18 +31,55 @@
           <span class="font-weight-semibold">Promedios de todas las materias</span>
         </v-card-title>
         <v-row>
-          <v-col v-for="data in statisticsData" :key="data.title" cols="6" md="3" class="d-flex align-center">
-            <v-avatar size="44" :color="resolveStatisticsIconVariation(data.title).color" rounded class="elevation-1">
+          <v-col cols="6" md="3" class="d-flex align-center">
+            <v-avatar size="44" color="primary" rounded class="elevation-1">
               <v-icon dark color="white" size="30">
-                {{ resolveStatisticsIconVariation(data.title).icon }}
+                {{ icons.mdiTrendingUp }}
               </v-icon>
             </v-avatar>
             <div class="ms-3">
-              <p class="text-xs mb-0">
-                {{ data.title }}
-              </p>
+              <p class="text-xs mb-0">Trimestre 1</p>
               <h3 class="text-xl font-weight-semibold">
-                {{ data.total }}
+                {{ globals.average1 }}
+              </h3>
+            </div>
+          </v-col>
+          <v-col cols="6" md="3" class="d-flex align-center">
+            <v-avatar size="44" color="primary" rounded class="elevation-1">
+              <v-icon dark color="white" size="30">
+                {{ icons.mdiTrendingUp }}
+              </v-icon>
+            </v-avatar>
+            <div class="ms-3">
+              <p class="text-xs mb-0">Trimestre 2</p>
+              <h3 class="text-xl font-weight-semibold">
+                {{ globals.average2 }}
+              </h3>
+            </div>
+          </v-col>
+          <v-col cols="6" md="3" class="d-flex align-center">
+            <v-avatar size="44" color="primary" rounded class="elevation-1">
+              <v-icon dark color="white" size="30">
+                {{ icons.mdiTrendingUp }}
+              </v-icon>
+            </v-avatar>
+            <div class="ms-3">
+              <p class="text-xs mb-0">Trimestre 3</p>
+              <h3 class="text-xl font-weight-semibold">
+                {{ globals.average3 }}
+              </h3>
+            </div>
+          </v-col>
+          <v-col cols="6" md="3" class="d-flex align-center">
+            <v-avatar size="44" color="success" rounded class="elevation-1">
+              <v-icon dark color="white" size="30">
+                {{ icons.mdiAccountOutline }}
+              </v-icon>
+            </v-avatar>
+            <div class="ms-3">
+              <p class="text-xs mb-0">Promedio global</p>
+              <h3 class="text-xl font-weight-semibold">
+                {{ globals.average3 }}
               </h3>
             </div>
           </v-col>
@@ -63,16 +100,16 @@
               hide-details
             ></v-text-field>
           </v-card-title>
-          <v-data-table :headers="headers" :items="items" :items-per-page="10" :search="search" class="elevation-1">
-            <template v-slot:[`item.avg1_score1`]="{ item }">
+          <v-data-table :headers="headers" :items="items" :loading="isLoading" :items-per-page="10" :search="search" class="elevation-1">
+            <template v-slot:[`item.period1_score1`]="{ item }">
               <v-edit-dialog
-                :return-value.sync="item.avg1_score1"
-                @save="save"
+                :return-value.sync="item.period1_score1"
+                @save="save(item)"
               >
-                {{ item.avg1_score1 }}
+                {{ item.period1_score1 }}
                 <template v-slot:input>
                   <v-text-field
-                    v-model="item.avg1_score1"
+                    v-model="item.period1_score1"
                     label="Edit"
                     type="number"
                     min="1"
@@ -83,35 +120,15 @@
                 </template>
               </v-edit-dialog>
             </template>
-            <template v-slot:[`item.avg1_score2`]="{ item }">
+            <template v-slot:[`item.period1_score2`]="{ item }">
               <v-edit-dialog
-                :return-value.sync="item.avg1_score2"
-                @save="save"
+                :return-value.sync="item.period1_score2"
+                @save="save(item)"
               >
-                {{ item.avg1_score2 }}
+                {{ item.period1_score2 }}
                 <template v-slot:input>
                   <v-text-field
-                    v-model="item.avg1_score2"
-                    label="Edit"
-                    type="number"
-                    min="1"
-                    max="10"
-                    :rules="[minNumbers, maxNumbers, isNumber]"
-                    single-line
-                  ></v-text-field>
-                </template>
-              </v-edit-dialog>
-            </template>
-
-            <template v-slot:[`item.avg1_score3`]="{ item }">
-              <v-edit-dialog
-                :return-value.sync="item.avg1_score3"
-                @save="save"
-              >
-                {{ item.avg1_score3 }}
-                <template v-slot:input>
-                  <v-text-field
-                    v-model="item.avg1_score3"
+                    v-model="item.period1_score2"
                     label="Edit"
                     type="number"
                     min="1"
@@ -123,110 +140,15 @@
               </v-edit-dialog>
             </template>
 
-            <template v-slot:[`item.avg2_score1`]="{ item }">
+            <template v-slot:[`item.period1_score3`]="{ item }">
               <v-edit-dialog
-                :return-value.sync="item.avg2_score1"
-                @save="save"
+                :return-value.sync="item.period1_score3"
+                @save="save(item)"
               >
-                {{ item.avg2_score1 }}
+                {{ item.period1_score3 }}
                 <template v-slot:input>
                   <v-text-field
-                    v-model="item.avg2_score1"
-                    label="Edit"
-                    type="number"
-                    min="1"
-                    max="10"
-                    :rules="[minNumbers, maxNumbers, isNumber]"
-                    single-line
-                  ></v-text-field>
-                </template>
-              </v-edit-dialog>
-            </template>
-            <template v-slot:[`item.avg2_score2`]="{ item }">
-              <v-edit-dialog
-                :return-value.sync="item.avg2_score2"
-                @save="save"
-              >
-                {{ item.avg2_score2 }}
-                <template v-slot:input>
-                  <v-text-field
-                    v-model="item.avg2_score2"
-                    label="Edit"
-                    type="number"
-                    min="1"
-                    max="10"
-                    :rules="[minNumbers, maxNumbers, isNumber]"
-                    single-line
-                  ></v-text-field>
-                </template>
-              </v-edit-dialog>
-            </template>
-            <template v-slot:[`item.avg2_score3`]="{ item }">
-              <v-edit-dialog
-                :return-value.sync="item.avg2_score3"
-                @save="save"
-              >
-                {{ item.avg2_score3 }}
-                <template v-slot:input>
-                  <v-text-field
-                    v-model="item.avg2_score3"
-                    label="Edit"
-                    type="number"
-                    min="1"
-                    max="10"
-                    :rules="[minNumbers, maxNumbers, isNumber]"
-                    single-line
-                  ></v-text-field>
-                </template>
-              </v-edit-dialog>
-            </template>
-            <template v-slot:[`item.avg3_score1`]="{ item }">
-              <v-edit-dialog
-                :return-value.sync="item.avg3_score1"
-                @save="save"
-              >
-                {{ item.avg3_score1 }}
-                <template v-slot:input>
-                  <v-text-field
-                    v-model="item.avg3_score1"
-                    label="Edit"
-                    type="number"
-                    min="1"
-                    max="10"
-                    :rules="[minNumbers, maxNumbers, isNumber]"
-                    single-line
-                  ></v-text-field>
-                </template>
-              </v-edit-dialog>
-            </template>
-            <template v-slot:[`item.avg3_score2`]="{ item }">
-              <v-edit-dialog
-                :return-value.sync="item.avg3_score2"
-                @save="save"
-              >
-                {{ item.avg3_score2 }}
-                <template v-slot:input>
-                  <v-text-field
-                    v-model="item.avg3_score2"
-                    label="Edit"
-                    type="number"
-                    min="1"
-                    max="10"
-                    :rules="[minNumbers, maxNumbers, isNumber]"
-                    single-line
-                  ></v-text-field>
-                </template>
-              </v-edit-dialog>
-            </template>
-            <template v-slot:[`item.avg3_score3`]="{ item }">
-              <v-edit-dialog
-                :return-value.sync="item.avg3_score3"
-                @save="save"
-              >
-                {{ item.avg3_score3 }}
-                <template v-slot:input>
-                  <v-text-field
-                    v-model="item.avg3_score3"
+                    v-model="item.period1_score3"
                     label="Edit"
                     type="number"
                     min="1"
@@ -238,14 +160,129 @@
               </v-edit-dialog>
             </template>
 
-            <template v-slot:[`item.average1`]="{ item }">
-              <v-toolbar color="#B39DDB" elevation="0">{{ item.average1 }}</v-toolbar>
+            <template v-slot:[`item.period2_score1`]="{ item }">
+              <v-edit-dialog
+                :return-value.sync="item.period2_score1"
+                @save="save(item)"
+              >
+                {{ item.period2_score1 }}
+                <template v-slot:input>
+                  <v-text-field
+                    v-model="item.period2_score1"
+                    label="Edit"
+                    type="number"
+                    min="1"
+                    max="10"
+                    :rules="[minNumbers, maxNumbers, isNumber]"
+                    single-line
+                  ></v-text-field>
+                </template>
+              </v-edit-dialog>
             </template>
-            <template v-slot:[`item.average2`]="{ item }">
-              <v-toolbar color="#B39DDB" elevation="0">{{ item.average2 }}</v-toolbar>
+            <template v-slot:[`item.period2_score2`]="{ item }">
+              <v-edit-dialog
+                :return-value.sync="item.period2_score2"
+                @save="save(item)"
+              >
+                {{ item.period2_score2 }}
+                <template v-slot:input>
+                  <v-text-field
+                    v-model="item.period2_score2"
+                    label="Edit"
+                    type="number"
+                    min="1"
+                    max="10"
+                    :rules="[minNumbers, maxNumbers, isNumber]"
+                    single-line
+                  ></v-text-field>
+                </template>
+              </v-edit-dialog>
             </template>
-            <template v-slot:[`item.average3`]="{ item }">
-              <v-toolbar color="#B39DDB" elevation="0">{{ item.average3 }}</v-toolbar>
+            <template v-slot:[`item.period2_score3`]="{ item }">
+              <v-edit-dialog
+                :return-value.sync="item.period2_score3"
+                @save="save(item)"
+              >
+                {{ item.period2_score3 }}
+                <template v-slot:input>
+                  <v-text-field
+                    v-model="item.period2_score3"
+                    label="Edit"
+                    type="number"
+                    min="1"
+                    max="10"
+                    :rules="[minNumbers, maxNumbers, isNumber]"
+                    single-line
+                  ></v-text-field>
+                </template>
+              </v-edit-dialog>
+            </template>
+            <template v-slot:[`item.period3_score1`]="{ item }">
+              <v-edit-dialog
+                :return-value.sync="item.period3_score1"
+                @save="save(item)"
+              >
+                {{ item.period3_score1 }}
+                <template v-slot:input>
+                  <v-text-field
+                    v-model="item.period3_score1"
+                    label="Edit"
+                    type="number"
+                    min="1"
+                    max="10"
+                    :rules="[minNumbers, maxNumbers, isNumber]"
+                    single-line
+                  ></v-text-field>
+                </template>
+              </v-edit-dialog>
+            </template>
+            <template v-slot:[`item.period3_score2`]="{ item }">
+              <v-edit-dialog
+                :return-value.sync="item.period3_score2"
+                @save="save(item)"
+              >
+                {{ item.period3_score2 }}
+                <template v-slot:input>
+                  <v-text-field
+                    v-model="item.period3_score2"
+                    label="Edit"
+                    type="number"
+                    min="1"
+                    max="10"
+                    :rules="[minNumbers, maxNumbers, isNumber]"
+                    single-line
+                  ></v-text-field>
+                </template>
+              </v-edit-dialog>
+            </template>
+            <template v-slot:[`item.period3_score3`]="{ item }">
+              <v-edit-dialog
+                :return-value.sync="item.period3_score3"
+                @save="save(item)"
+              >
+                {{ item.period3_score3 }}
+                <template v-slot:input>
+                  <v-text-field
+                    v-model="item.period3_score3"
+                    label="Edit"
+                    type="number"
+                    min="1"
+                    max="10"
+                    :rules="[minNumbers, maxNumbers, isNumber]"
+                    single-line
+                  ></v-text-field>
+                </template>
+              </v-edit-dialog>
+            </template>
+
+            <template v-slot:[`item.average_period1`]="{ item }">
+              <v-toolbar color="#B39DDB" elevation="0">{{ item.average_period1 }}</v-toolbar>
+            </template>
+            <template v-slot:[`item.average_period2`]="{ item }">
+              <v-toolbar color="#B39DDB" elevation="0">{{ item.average_period2 }}</v-toolbar>
+            </template>
+            <template v-slot:[`item.average_period3`]="{ item }">
+              <v-toolbar color="#B39DDB" elevation="0">{{ item.average_period3 }}</v-toolbar>
             </template>
           </v-data-table>
         </v-card>
@@ -264,6 +301,8 @@ import {
   mdiDotsVertical,
   mdiLabelOutline,
 } from '@mdi/js'
+import { getWithToken, putWithToken } from '@/helpers/ApiService'
+import Swal from 'sweetalert2'
 
 export default {
   // Estadisticas
@@ -313,90 +352,80 @@ export default {
       },
     }
   },
+  props: ['item'],
 
   // Datos Tabla
   data() {
     return {
+      isLoading: false,
       minNumbers: v => v >= 1 || 'No puede ser 0',
       maxNumbers: v => v <= 10 || 'No puede ser mayor a 10',
       isNumber: v => !isNaN(v) || 'is not a number',
       headers: [
-        { text: 'Materia', value: 'subject' },
-        { text: 'Actividad 1 30%', value: 'avg1_score1' },
-        { text: 'Actividad 2 30%', value: 'avg1_score2' },
-        { text: 'Actividad 3 35%', value: 'avg1_score3' },
-        { text: 'Trimestre 1', value: 'average1' },
+        { text: 'Materia', value: 'subject.name' },
+        { text: 'Actividad 1 30%', value: 'period1_score1' },
+        { text: 'Actividad 2 30%', value: 'period1_score2' },
+        { text: 'Actividad 3 35%', value: 'period1_score3' },
+        { text: 'Trimestre 1', value: 'average_period1' },
 
-        { text: 'Actividad 1 30%', value: 'avg2_score1' },
-        { text: 'Actividad 2 30%', value: 'avg2_score2' },
-        { text: 'Actividad 3 35%', value: 'avg2_score3' },
-        { text: 'Trimestre 2', value: 'average2' },
+        { text: 'Actividad 1 30%', value: 'period2_score1' },
+        { text: 'Actividad 2 30%', value: 'period2_score2' },
+        { text: 'Actividad 3 35%', value: 'period2_score3' },
+        { text: 'Trimestre 2', value: 'average_period2' },
 
-        { text: 'Actividad 1 30%', value: 'avg2_score1' },
-        { text: 'Actividad 2 30%', value: 'avg3_score2' },
-        { text: 'Actividad 3 35%', value: 'avg3_score3' },
-        { text: 'Trimestre 3', value: 'average3' },
+        { text: 'Actividad 1 30%', value: 'period3_score1' },
+        { text: 'Actividad 2 30%', value: 'period3_score2' },
+        { text: 'Actividad 3 35%', value: 'period3_score3' },
+        { text: 'Trimestre 3', value: 'average_period3' },
       ],
-      items: [
-        {
-          subject: 'Matemática',
-          avg1_score1: 8.5,
-          avg1_score2: 8.5,
-          avg1_score3: 8.5,
-          average1: 0,
-
-          avg2_score1: 8.5,
-          avg2_score2: 8.5,
-          avg2_score3: 8.5,
-          average2: 0,
-
-          avg3_score1: 8.5,
-          avg3_score2: 8.5,
-          avg3_score3: 8.5,
-          average3: 0,
-        },
-        {
-          subject: 'Sociales',
-          avg1_score1: 8.5,
-          avg1_score2: 8.5,
-          avg1_score3: 8.5,
-          average1: 0,
-
-          avg2_score1: 8.5,
-          avg2_score2: 8.5,
-          avg2_score3: 8.5,
-          average2: 0,
-
-          avg3_score1: 8.5,
-          avg3_score2: 8.5,
-          avg3_score3: 8.5,
-          average3: 0,
-        },
-        {
-          subject: 'Lenguaje',
-          avg1_score1: 8.5,
-          avg1_score2: 8.5,
-          avg1_score3: 8.5,
-          average1: 0,
-
-          avg2_score1: 8.5,
-          avg2_score2: 8.5,
-          avg2_score3: 8.5,
-          average2: 0,
-
-          avg3_score1: 8.5,
-          avg3_score2: 8.5,
-          avg3_score3: 8.5,
-          average3: 0,
-        },
-      ],
+      items: [],
+      globals: null,
     }
+
+
 
     // Barra de progreso
   },
+
+  mounted() {
+    this.getData()
+  },
+
   methods: {
-    save () {
-      alert('Guardado')
+    async save (item) {
+      const response = await putWithToken('scores/'+item.id, item)
+
+      if (response.status) {
+        this.getData()
+        Swal.fire({
+          icon: 'success',
+          text: 'Calificación actualizada',
+          showConfirmButton: false,
+          toast: true,
+          timer: 1500,
+          position: 'bottom'
+        })
+      }else{
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Ha ocurrido un error',
+        })
+      }
+
+    },
+
+    async getData() {
+      this.isLoading = true;
+
+      const response = await getWithToken('students/scores/'+ this.$route.params.id)
+
+      if (response.status) {
+        this.items = response.data.scores
+        this.globals = response.data.globals
+      }
+
+      this.isLoading = false;
     },
   }
 }

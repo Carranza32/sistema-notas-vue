@@ -44,14 +44,15 @@ const routes = [
     meta: { roles: ['Profesor'], requiredLogin: true }
   },
   {
-    path: '/docentes/materia/detalle',
+    path: '/docentes/materia/detalle/:id',
     name: 'teacher-subject-details',
     component: () => import('@/views/pages/Teacher/SubjectDetail.vue'),
     meta: { roles: ['Profesor'], requiredLogin: true }
   },
   {
-    path: '/docentes/materia/alumno',
+    path: '/docentes/materia/alumno/:id',
     name: 'teacher-subject-student',
+    props: true,
     component: () => import('@/views/pages/Teacher/StudentScores.vue'),
     meta: { roles: ['Profesor'], requiredLogin: true }
   },

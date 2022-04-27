@@ -2,12 +2,12 @@
   <div>
     <p class="text-2xl mb-6">Mis Aulas</p>
     <v-row>
-      <v-col lg="4" cols="12" v-for="item in items" :key="item">
+      <v-col lg="4" cols="12" v-for="item in items" :key="item.id">
         <v-card>
           <div class="d-flex flex-column-reverse">
             <div>
               <v-card-title class="align-start">
-                <span class="font-weight-semibold">{{ item }}</span>
+                <span class="font-weight-semibold">{{ item.name }}</span>
                 <v-spacer></v-spacer>
                 <v-btn icon small class="me-n3 mt-n2">
                   <v-icon>
@@ -22,7 +22,7 @@
                       {{ mdiAccountSupervisor }}
                     </v-icon>
                   </v-avatar>
-                  20 Estudiantes inscritos
+                  {{ item.students_count }} Estudiantes inscritos
                 </span>
               </v-card-text>
               <v-card-actions class="dense">
@@ -40,21 +40,34 @@
 
 <script>
 import { mdiAccountSupervisor, mdiDotsVertical } from '@mdi/js'
+import { getWithToken } from '@/helpers/ApiService';
 export default {
-  setup() {
+  setup() {},
+
+  data() {
     return {
       mdiAccountSupervisor,
       mdiDotsVertical,
-      items: [
-        '5A',
-        '6B',
-        '7C',
-      ]
+      items: []
     }
   },
+
+  mounted(){
+    this.getData();
+  },
+
   methods: {
-    SubjectDetails(){
-      this.$router.push({name: 'teacher-subject-details'})
+    async getData() {
+      const response = await getWithToken('teachers/groups')
+
+      if (response.status) {
+        this.items = response.data
+        console.log(response.data)
+      }
+    },
+
+    SubjectDetails(item){
+      this.$router.push({name: 'teacher-subject-details', params: { id: item.id } })
     }
   }
 }

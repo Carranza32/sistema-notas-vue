@@ -14,8 +14,8 @@
               {{ student.name }} {{ student.last_name }}
             </v-card-title>
             <v-card-subtitle class="pa-0">
-              <p>Materia: {{ }} {{ student.group.name }}</p>
-              <p>DOCENTE: {{ student.group.teacher.name }}</p>
+              <!-- <p>Materia: {{ student.group.teacher.subject.name }} {{ student.group.name }}</p>
+              <p>DOCENTE: {{ student.group.teacher.name }}</p> -->
             </v-card-subtitle>
           </div>
         </div>
@@ -27,7 +27,7 @@
         <v-card-title class="align-start">
           <span class="font-weight-semibold">Estadisticas de la materia</span>
         </v-card-title>
-        <v-row>
+        <!-- <v-row>
           <v-col v-for="data in scores" v-bind:key="data.id" cols="12" md="12">
             <v-row>
               <v-col cols="12" lg="3" class="ms-3 d-flex align-center">
@@ -77,7 +77,10 @@
               </v-col>
             </v-row>
           </v-col>
-        </v-row>
+        </v-row> -->
+
+        <v-data-table :headers="headers" :items="items" :items-per-page="10" :search="search" class="elevation-1">
+        </v-data-table>
         <!--Barra de progreso-->
       </v-card-text>
 
@@ -90,56 +93,14 @@ import { mdiPencil, mdiDelete, mdiAccountOutline, mdiCurrencyUsd, mdiTrendingUp,
 import { getWithToken } from '@/helpers/ApiService'
 
 export default {
-  // Estadisticas
+  setup() {},
 
-  setup() {
-    const statisticsData = [
-      {
-        title1: 'Nota 1 (30%)',
-        total1: '8.96',
-
-        title2: 'Nota 2 (30%)',
-        total2: '8.96',
-
-        title3: 'Nota 3 (35%)',
-        total3: '8.96',
-      },
-      {
-        title1: 'Nota 1 (30%)',
-        total1: '8.96',
-
-        title2: 'Nota 2 (30%)',
-        total2: '8.96',
-
-        title3: 'Nota 3 (35%)',
-        total3: '8.96',
-      },
-      {
-        title1: 'Nota 1 (30%)',
-        total1: '8.96',
-
-        title2: 'Nota 2 (30%)',
-        total2: '8.96',
-
-        title3: 'Nota 3 (35%)',
-        total3: '8.96',
-      },
-    ]
-    const resolveStatisticsIconVariation = data => {
-      if (data === 'Trimestre 1') return { icon: mdiTrendingUp, color: 'primary' }
-      if (data === 'Trimestre 2') return { icon: mdiTrendingUp, color: 'primary' }
-      if (data === 'Trimestre 3') return { icon: mdiTrendingUp, color: 'primary' }
-      if (data === 'Promedio final') return { icon: mdiTrendingUp, color: 'primary' }
-
-      return { icon: mdiAccountOutline, color: 'success' }
-    }
-
+  // Datos Tabla
+  data() {
     return {
+      _id: this.$route.params.id,
       search: '',
-      statisticsData,
-      resolveStatisticsIconVariation,
 
-      // icons
       icons: {
         mdiDotsVertical,
         mdiTrendingUp,
@@ -149,90 +110,45 @@ export default {
         mdiPencil,
         mdiDelete,
       },
-    }
-  },
 
-  // Datos Tabla
-  data() {
-    return {
-      _id: this.$route.params.id,
       headers: [
-        {
-          text: 'Apellidos',
-          align: 'start',
-          value: 'lastname',
-        },
-        { text: 'Nombre', value: 'name' },
-        { text: 'Carnet', value: 'uid' },
-        { text: 'Grupo', value: 'group' },
-        { text: 'e-mail', value: 'email' },
-        { text: 'Promedio 1', value: 'score1' },
-        { text: 'Promedio 2', value: 'score2' },
-        { text: 'Promedio 3', value: 'score3' },
-        { text: 'Final', value: 'average' },
-        { text: 'Acciones', value: 'actions', sortable: false },
+        { text: 'Actividad 1 30%', value: 'period1_score1' },
+        { text: 'Actividad 2 30%', value: 'period1_score2' },
+        { text: 'Actividad 3 35%', value: 'period1_score3' },
+        { text: 'Trimestre 1', value: 'average1' },
+
+        { text: 'Actividad 1 30%', value: 'period2_score1' },
+        { text: 'Actividad 2 30%', value: 'period2_score2' },
+        { text: 'Actividad 3 35%', value: 'period2_score3' },
+        { text: 'Trimestre 2', value: 'average2' },
+
+        { text: 'Actividad 1 30%', value: 'period3_score1' },
+        { text: 'Actividad 2 30%', value: 'period3_score2' },
+        { text: 'Actividad 3 35%', value: 'period3_score3' },
+        { text: 'Trimestre 3', value: 'average3' },
       ],
+
       scores: [],
       student: {},
-      subject: {},
-      items: [
-        {
-          lastname: 'Aguilar Melgar',
-          name: 'Julio Isrrael',
-          uid: '2019AG000',
-          group: 1,
-          email: '2019AG000@sj.com',
-          score1: 9,
-          score2: 8.5,
-          score3: 7,
-          average: 0.0,
-        },
-        {
-          lastname: 'Carranza Rivas',
-          name: 'Mario Ernesto',
-          uid: '2018CR001',
-          group: 1,
-          email: '2018CR001@sj.com',
-          score1: 9.6,
-          score2: 5,
-          score3: 7,
-          average: 0.0,
-        },
-        {
-          lastname: 'Palacios Ayala',
-          name: 'Diego Ernesto',
-          uid: '2019PA002',
-          group: 1,
-          email: '2019PA002@sj.com',
-          score1: 7,
-          score2: 7.2,
-          score3: 8.3,
-          average: 0.0,
-        },
-      ],
+      subject: [],
+      items: [],
     }
 
     // Barra de progreso
   },
-  created() {
-    console.log(this.$route.params.id)
+  mounted() {
     this.getData()
   },
 
   methods: {
     async getData() {
       const response = await getWithToken('students/subjects/'+this._id)
-      console.log(response)
 
       if (response.status) {
-        this.scores = response.data.scores
+        this.items = response.data.scores
         this.student = response.data.student
-        this.subject = response.data.subject
+      	console.log(response.data)
       }
-
-      console.log(this.student)
-      console.log(this.scores)
-      console.log(this.subject)
 
     },
 
