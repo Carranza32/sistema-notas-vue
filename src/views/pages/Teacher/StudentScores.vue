@@ -15,10 +15,10 @@
         <div class="d-flex justify-space-between flex-wrap pt-5">
           <div class="me-2 mb-2">
             <v-card-title class="pt-0 px-0">
-              5TO GRADO A
+            {{ student.name }} {{ student.lastname }}
             </v-card-title>
             <v-card-subtitle class="text-xs pa-0">
-              <p>Mario Carranza Estudiante</p>
+              <p>Salon: {{ student.group.name }}</p>
             </v-card-subtitle>
           </div>
         </div>
@@ -384,6 +384,7 @@ export default {
       ],
       items: [],
       globals: null,
+      student: null,
     }
 
 
@@ -440,6 +441,7 @@ export default {
       if (response.status) {
         this.items = response.data.scores
         this.globals = response.data.globals
+        this.student = response.data.student
       }
 
       this.isLoading = false;

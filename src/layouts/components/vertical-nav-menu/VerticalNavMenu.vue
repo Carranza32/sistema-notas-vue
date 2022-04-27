@@ -12,7 +12,7 @@
     <div class="vertical-nav-header d-flex items-center ps-6 pe-5 pt-5 pb-2">
 
         <v-img
-          :src="require('@/assets/images/logos/logo.svg')"
+          :src="require('@/assets/images/logos/billgates.png')"
           max-height="66px"
           max-width="250px"
           alt="logo"

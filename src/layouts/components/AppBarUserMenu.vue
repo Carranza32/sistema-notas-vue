@@ -45,7 +45,7 @@
           style="vertical-align:middle"
         >
           <span class="text--primary font-weight-semibold mb-n1">
-           {{ user }}
+           {{ user.name }}
           </span>
           <small class="text--disabled text-capitalize"> {{ role }}</small>
         </div>
@@ -116,18 +116,21 @@ export default {
       },
     }
   },
-  data:{
-    user: null,
-    role: null
+  data() {
+    return {
+      user: null,
+      role: null,
+    }
   },
   mounted(){
+    if (localStorage.getItem('role')) {
+      this.role = localStorage.getItem('role')
+    }
+
     if (localStorage.getItem('user')) {
-        const userJson = JSON.parse(localStorage.getItem('user'))
+      let json = JSON.parse(localStorage.getItem('user'));
 
-        console.log(userJson)
-
-        this.user = userJson.name
-        this.role = localStorage.getItem('role')
+      this.user = json;
     }
   }
 }
