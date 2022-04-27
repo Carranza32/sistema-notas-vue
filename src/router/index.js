@@ -8,8 +8,8 @@ const routes = [
   //Admin routes
   {
     path: '/',
-    redirect: 'dashboard',
-    meta: { roles: ['Administrador'], requiredLogin: true }
+    redirect: 'login',
+    meta: { requiredLogin: true }
   },
   {
     path: '/admin/materias',
@@ -172,7 +172,6 @@ router.beforeEach((to, from, next) => {
     next({ name: 'pages-login' })
   }
 
-  console.log()
   // if ( localStorage.getItem('role') !== to.meta.roles) {
   //   //No hay permisos
   //   next({ name: 'dashboard' })

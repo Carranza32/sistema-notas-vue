@@ -45,9 +45,9 @@
           style="vertical-align:middle"
         >
           <span class="text--primary font-weight-semibold mb-n1">
-           {{datos.user }}
+           {{ user }}
           </span>
-          <small class="text--disabled text-capitalize"> {{ datos.role }}</small>
+          <small class="text--disabled text-capitalize"> {{ role }}</small>
         </div>
       </div>
 
@@ -86,11 +86,6 @@ import {
 } from '@mdi/js'
 import { getWithToken } from '@/helpers/ApiService'
 
-  const user = localStorage.getItem('user')
-
-  const userJson = JSON.parse(user)
-
-  const {name} = userJson
 
 export default {
   methods:{
@@ -119,13 +114,22 @@ export default {
         mdiHelpCircleOutline,
         mdiLogoutVariant,
       },
-      datos : {
-
-        user: name ,
-        role: localStorage.getItem('role')
-      }
     }
   },
+  data:{
+    user: null,
+    role: null
+  },
+  mounted(){
+    if (localStorage.getItem('user')) {
+        const userJson = JSON.parse(localStorage.getItem('user'))
+
+        console.log(userJson)
+
+        this.user = userJson.name
+        this.role = localStorage.getItem('role')
+    }
+  }
 }
 </script>
 

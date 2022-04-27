@@ -91,6 +91,7 @@
     <v-row class="mt-5">
       <v-col cols="12">
         <v-card>
+          <v-btn raised elevation="2" color="primary" @click="xport()">Exportar</v-btn>
           <v-card-title>
             <v-text-field
               v-model="search"
@@ -303,6 +304,7 @@ import {
 } from '@mdi/js'
 import { getWithToken, putWithToken } from '@/helpers/ApiService'
 import Swal from 'sweetalert2'
+import {json2excel} from 'js2excel';
 
 export default {
   // Estadisticas
@@ -395,7 +397,6 @@ export default {
 
   methods: {
     async save (item) {
-
       const response = await putWithToken('scores/'+item.id, item)
 
       if (response.status) {
@@ -424,8 +425,19 @@ export default {
         } else if (num > 1 && num <= 10) {
           return true
         }
-    }
-    ,
+    },
+
+    xport(){
+      try {
+        json2excel({
+            data: this.items,
+            name: 'Notas',
+            formateDate: 'yyyy/mm/dd'
+        });
+      } catch (e) {
+          console.error('export error');
+      }
+    },
 
 
     async getData() {
